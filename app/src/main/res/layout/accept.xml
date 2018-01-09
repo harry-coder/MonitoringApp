@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    >
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_alignParentTop="true"
+            android:background="@color/colorUnreadText" />
+
+        <firebasecloud.com.firebasecloud.CustomElements.CustomFontTextView
+            android:id="@+id/tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="30dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:layout_marginEnd="5dp"
+            android:padding="10dp"
+            android:text="Expired"
+            android:textColor="@color/colorUnreadText"
+            android:textSize="20sp"
+             />
+
+        <View
+            android:id="@+id/horizontal_view"
+            android:layout_width="1dp"
+            android:layout_height="90dp"
+            android:layout_marginStart="6.6dp"
+            android:layout_toEndOf="@+id/tv_status"
+            android:background="#d3d3d3" />
+
+        <TextView
+            android:id="@+id/view_zero"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_toEndOf="@+id/tv_status"
+
+            android:background="#fff"
+            android:text="O"
+            android:textSize="20sp" />
+
+        <firebasecloud.com.firebasecloud.CustomElements.CustomFontTextView
+            android:id="@+id/tv_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_toEndOf="@+id/horizontal_view"
+            android:ellipsize="end"
+
+            android:textSize="20sp"
+            android:maxLines="2"
+
+            android:padding="5dp"
+            android:text="Upload Images of 60 door hangers formsector 45, and 46"
+            android:textColor="#313641" />
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/horizontal_view"
+            android:background="#f6f6f6"
+
+
+            >
+
+            <firebasecloud.com.firebasecloud.CustomElements.CustomFontTextView
+                android:id="@+id/tv_active_task_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                android:drawablePadding="5dp"
+
+                android:drawableStart="@drawable/accept_clock_icon"
+                android:padding="5dp"
+                android:text="Start: 26th jan 2018"
+                android:textSize="18sp" />
+
+
+            <firebasecloud.com.firebasecloud.CustomElements.CustomFontTextView
+                android:id="@+id/tv_active_end_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                android:drawablePadding="5dp"
+                android:drawableStart="@drawable/reject_clock_icon"
+                android:padding="5dp"
+                android:text="End: 28th jan 2018"
+                android:textSize="18sp" />
+        </TableRow>
+        <firebasecloud.com.firebasecloud.CustomElements.CustomFontTextView
+            android:id="@+id/tv_task_incentive"
+
+            android:layout_width="80dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="10dp"
+            android:textAlignment="center"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="17dp"
+            android:background="@drawable/round_background"
+
+            android:padding="5dp"
+            android:text="₹150/-" />
+
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

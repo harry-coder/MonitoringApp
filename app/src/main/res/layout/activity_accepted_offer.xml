@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="firebasecloud.com.firebasecloud.CallClasses.AcceptedOffer">
+
+        <RelativeLayout
+            android:id="@+id/rl_first"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#054d44"
+
+            >
+
+            <ImageView
+                android:id="@+id/okhleeImage"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="40dp"
+
+                android:src="@drawable/okhlee_launcher_white" />
+
+            <TextView
+
+                android:id="@+id/tv_task"
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/okhleeImage"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="OKHLEE CALLING"
+                android:textColor="#fff"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_newOffer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_task"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:text="New task for you"
+                android:textColor="#fff" />
+
+            <TextView
+                android:id="@+id/tv_rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_alignStart="@+id/tv_task"
+                android:layout_below="@+id/tv_newOffer"
+
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:drawableStart="@drawable/rupeesymbol"
+                android:text="150/-"
+                android:textColor="#fff"
+
+                />
+
+            <TextView
+                android:id="@+id/tv_or"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_newOffer"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@+id/tv_rate"
+                android:text="|"
+
+                android:textColor="#fff"
+
+
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_below="@+id/tv_newOffer"
+
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="10dp"
+
+                android:layout_toEndOf="@+id/tv_or"
+                android:drawablePadding="5dp"
+                android:drawableStart="@drawable/time_icon"
+                android:text="24 hrs"
+                android:textColor="#fff" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/rl_first"
+            android:background="#191919"
+
+            >
+
+
+            <ImageView
+                android:id="@+id/im_call"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_above="@+id/tv_swipe"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+
+
+                android:layout_marginBottom="100dp"
+
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="120dp"
+                android:src="@drawable/accept_icon"
+                android:textAlignment="center">
+
+
+            </ImageView>
+
+            <ImageView
+                android:id="@+id/im_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_alignParentBottom="true"
+
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="100dp"
+                android:layout_marginStart="20dp"
+
+                android:background="@drawable/image_bg"
+
+                android:src="@drawable/cancel_icon"
+
+                android:textAlignment="center"
+                android:visibility="invisible"
+
+                >
+
+
+            </ImageView>
+
+            <ImageView
+                android:id="@+id/im_pick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+
+                android:layout_alignParentBottom="true"
+
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="100dp"
+                android:layout_marginStart="20dp"
+
+                android:background="@drawable/image_bg"
+                android:src="@drawable/call_icon"
+                android:textAlignment="center"
+                android:visibility="invisible"
+
+
+                >
+
+
+            </ImageView>
+
+            <TextView
+                android:id="@+id/tv_swipe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+
+                android:layout_alignTop="@+id/im_cancel"
+                android:layout_marginTop="50dp"
+                android:layout_centerHorizontal="true"
+                android:text="Swipe right to accept"
+                android:textColor="#fff" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+</layout>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    >
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+
+        android:layout_marginTop="20dp"
+        app:srcCompat="@drawable/no_wifi_icon"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+
+    <TextView
+        android:id="@+id/tv_text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:typeface="serif"
+        android:textSize="15sp"
+        android:textColor="#000"
+        android:gravity="center"
+        android:text="No Internet"
+
+         />
+
+    <TextView
+        android:id="@+id/tv_text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="20"
+        android:gravity="center"
+        android:text="Please check your internet connection."
+       android:layout_below="@+id/tv_text1"
+        android:layout_marginTop="5dp"
+        android:layout_centerHorizontal="true" />
+    <TableRow
+        android:id="@+id/tableRow2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+       android:layout_below="@+id/tv_text2"
+
+       >
+
+        <View
+            android:id="@+id/view1"
+            android:layout_width="50dp"
+            android:layout_height="0.5dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:background="#D3D3D3" />
+
+        <TextView
+            android:id="@+id/tv_or"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:gravity="center"
+            android:text="OR"
+            android:textSize="15sp"
+            android:textStyle="bold"
+
+            />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="50dp"
+            android:layout_height="0.5dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:background="#D3D3D3" />
+
+    </TableRow>
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tableRow2"
+        android:layout_centerHorizontal="true"
+        android:typeface="serif"
+        android:textSize="15sp"
+        android:textColor="#000"
+        android:gravity="center"
+        android:ems="20"
+        android:layout_marginTop="24dp"
+        android:text="Call us for more information" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView4"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:textColor="#00BFFF"
+        android:gravity="center"
+        android:drawableLeft="@drawable/place_call_icon"
+        android:drawableStart="@drawable/place_call_icon"
+        android:text="8433265548"
+        android:paddingEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:paddingRight="20dp" />
+
+</RelativeLayout>

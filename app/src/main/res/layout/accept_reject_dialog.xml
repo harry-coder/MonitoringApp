@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="250dp"
+
+
+    >
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:background="@drawable/receipt"
+
+
+        >
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_alignParentTop="true"
+            android:background="@color/colorUnreadText" />
+
+
+        <firebasecloud.com.firebasecloud.CustomElements.CustomFontTextView
+
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="60dp"
+
+            android:layout_marginTop="25dp"
+            android:text="Collect pictures"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <firebasecloud.com.firebasecloud.CustomElements.CustomFontTextView
+            android:id="@+id/tv_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/tv_title"
+            android:layout_below="@+id/tv_title"
+            android:layout_marginEnd="10dp"
+
+            android:ellipsize="end"
+            android:maxLines="2"
+
+            android:padding="3dp"
+            android:text="Upload Images of 60 door hangers formsector 45, and 46"
+            android:textColor="#313641"
+            android:textSize="20sp" />
+
+        <firebasecloud.com.firebasecloud.CustomElements.CustomFontTextView
+
+            android:id="@+id/tv_start_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/tv_title"
+
+
+            android:layout_below="@+id/tv_desc"
+
+            android:layout_marginTop="10dp"
+            android:layout_toStartOf="@+id/tv_end_date"
+
+            android:drawablePadding="3dp"
+            android:drawableStart="@drawable/time_icon_darkbg"
+
+            android:ellipsize="end"
+
+            android:maxLines="1"
+            android:text="Start :26h jan 2018"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18sp" />
+
+        <firebasecloud.com.firebasecloud.CustomElements.CustomFontTextView
+
+            android:id="@+id/tv_end_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/tv_desc"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="10dp"
+            android:drawablePadding="3dp"
+
+            android:drawableStart="@drawable/time_icon_darkbg"
+            android:ellipsize="end"
+
+            android:maxLines="2"
+            android:text="End :28th jan 2018"
+
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18sp" />
+
+        <TableRow
+            android:id="@+id/row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_expire"
+            android:layout_marginTop="60dp"
+            android:background="#f6f6f6">
+
+
+            <firebasecloud.com.firebasecloud.CustomElements.CustomFontTextView
+                android:id="@+id/tv_reject"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_weight="2"
+                android:drawablePadding="5dp"
+                android:padding="5dp"
+                android:text="Reject"
+                android:textAlignment="textEnd"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <firebasecloud.com.firebasecloud.CustomElements.CustomFontTextView
+                android:id="@+id/tv_accept"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                android:drawablePadding="5dp"
+                android:padding="5dp"
+                android:text="Accept"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <View
+            android:id="@+id/line2"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignStart="@+id/tv_title"
+            android:layout_below="@+id/tv_start_date"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorUnreadText" />
+
+
+        <firebasecloud.com.firebasecloud.CustomElements.CustomFontTextView
+            android:id="@+id/tv_expire"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_alignStart="@+id/tv_start_date"
+            android:layout_below="@+id/line2"
+            android:drawablePadding="5dp"
+            android:drawableStart="@drawable/expire_icon"
+           android:layout_marginTop="8dp"
+            android:text="Task Expires : 28th jan"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignTop="@+id/tv_title"
+            android:layout_marginStart="10dp"
+            app:srcCompat="@drawable/redeem_icon" />
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

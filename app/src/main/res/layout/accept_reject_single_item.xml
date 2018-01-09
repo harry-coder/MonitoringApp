@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="110dp"
+
+    >
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_alignParentTop="true"
+            android:background="@color/colorUnreadText" />
+
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/line"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+
+            android:textColor="#fff">
+
+            <TextView
+                android:id="@+id/textView"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Live"
+                android:textColor="@color/colorUnreadText"
+
+                android:textSize="12sp" />
+
+
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:drawableEnd="@drawable/menu_icon"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="12dp"
+            />
+
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/frameLayout"
+            android:layout_marginEnd="12dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+
+            android:fontFamily="sans-serif-medium"
+            android:maxLines="2"
+
+
+            android:text="Upload Images of 60 door hangers formsector 45, and 46"
+            android:textColor="#313641" />
+
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#f6f6f6"
+
+            >
+
+            <TextView
+                android:id="@+id/tv_active_task_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                android:drawablePadding="5dp"
+
+                android:drawableStart="@drawable/time_icon_darkbg"
+                android:padding="5dp"
+                android:text="Start: 26th jan"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_task_incentive"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+
+                android:padding="5dp"
+                android:text="₹150/-" />
+
+            <TextView
+                android:id="@+id/tv_active_end_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                android:drawablePadding="5dp"
+                android:drawableStart="@drawable/time_icon_darkbg"
+                android:padding="5dp"
+                android:text="End: 28th jan"
+                android:textSize="12sp" />
+        </TableRow>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

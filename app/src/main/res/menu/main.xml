@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/bn_task"
+        android:icon="@drawable/task_icon"
+        android:orderInCategory="300"
+        android:title="Tasks"
+
+       >
+
+
+    </item>
+    <item
+        android:id="@+id/bn_active"
+        android:icon="@drawable/tasks_icon"
+        android:orderInCategory="300"
+        android:title="Active"
+
+        app:showAsAction="always">
+
+
+    </item>
+    <item
+        android:id="@+id/bn_profile"
+        android:icon="@drawable/profile_icon"
+        android:orderInCategory="300"
+        android:title="Profile"
+
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="collapseActionView|ifRoom">
+
+
+    </item>
+
+
+</menu>
