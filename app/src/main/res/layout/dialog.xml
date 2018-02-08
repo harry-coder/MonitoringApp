@@ -18,6 +18,7 @@
             android:layout_marginRight="22dp"
 
             android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
 
             android:drawableEnd="@drawable/camera"
             android:drawableRight="@drawable/camera" />
@@ -29,6 +30,8 @@
             android:layout_marginLeft="43dp"
             android:layout_marginStart="43dp"
             android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+
             android:drawableLeft="@drawable/gallery"
             android:drawableStart="@drawable/gallery" />
     </TableRow>

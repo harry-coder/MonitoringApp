@@ -6,13 +6,13 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -35,9 +35,6 @@ import java.util.Map;
 
 import firebasecloud.com.firebasecloud.Alert;
 import firebasecloud.com.firebasecloud.CustomElements.AcceptedTaskPojo;
-import firebasecloud.com.firebasecloud.CustomElements.CustomFontTextView;
-import firebasecloud.com.firebasecloud.CustomElements.TaskItems_POJO;
-import firebasecloud.com.firebasecloud.LoginActivity;
 import firebasecloud.com.firebasecloud.R;
 import firebasecloud.com.firebasecloud.Volly.vollySingleton;
 
@@ -98,14 +95,21 @@ public class AcceptedTasks extends Fragment {
 
         userAccptedTaskRecycleView.setAdapter(adapter);
 
-        getAccptedTaskListForUser(getActivity());
+      //  getAccptedTaskListForUser(getActivity());
         return view;
     }
 
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getAccptedTaskListForUser(getActivity());
+
+    }
+
     public void getAccptedTaskListForUser(final Context context) {
 
-        progressDialog.setMessage("Getting Accepted Task..");
+        progressDialog.setMessage("Getting  Task..");
         progressDialog.show();
 
         final String taskUrl = "http://www.admin-panel.adecity.com/task/get-task";
@@ -114,7 +118,7 @@ public class AcceptedTasks extends Fragment {
             public void run() {
 
                 HashMap<String, String> data = new HashMap<>();
-                data.put("user_id", LoginActivity.userId);
+                data.put("user_id", NewTasks.userId);
                 data.put("type", "Upcoming");
 
 
@@ -127,13 +131,13 @@ public class AcceptedTasks extends Fragment {
 
                                 try {
                                     boolean success = response.getBoolean("success");
+                                    progressDialog.dismiss();
 
 
                                     if (success) {
                                         handler.postDelayed(new Runnable() {
                                             @Override
                                             public void run() {
-                                                progressDialog.dismiss();
 
                                                 try {
                                                     globalAcceptedTaskList = getListItemsAfterResponse(response);
@@ -152,7 +156,7 @@ public class AcceptedTasks extends Fragment {
                                             @Override
                                             public void run() {
                                                 progressDialog.dismiss();
-                                                Alert.showAlertDialog("Something went wrong,try again", context);
+                                               // Alert.showAlertDialog("No task Found!", context);
 
                                             }
                                         });
@@ -177,7 +181,7 @@ public class AcceptedTasks extends Fragment {
                             } else if (error.getClass().equals(NoConnectionError.class)) {
                                 errorMessage = "Failed to connect server";
                             }
-                            progressDialog.dismiss();
+                           progressDialog.dismiss();
                         } else {
                             String result = new String(networkResponse.data);
                             try {
@@ -241,6 +245,7 @@ public class AcceptedTasks extends Fragment {
             taskItems.setDescription(taskObject.getString("desc"));
             taskItems.setStartDate(taskObject.getString("startDate"));
             taskItems.setIncentive(taskObject.getString("incentive"));
+            taskItems.setStatus(taskObject.getString("status"));
             taskItems.setEndDate(taskObject.getString("endDate"));
             taskItems.setTaskExpire(taskObject.getString("taskExpires"));
             taskItems.setTaskId(taskId);
@@ -285,11 +290,12 @@ public class AcceptedTasks extends Fragment {
             holder.tv_description.setText(itemList.getDescription());
             holder.tv_incentive.setText("₹"+itemList.getIncentive()+"/-");
 
+            holder.tv_status.setText(itemList.getStatus());
 
             try {
-                holder.tv_endDate.setText("End: " + NewTasks.getDate(itemList.getEndDate()));
+                holder.tv_endDate.setText("End: " + NewTasks.getDate(itemList.getEndDate(),false));
 
-                holder.tv_startDate.setText("Start : " + NewTasks.getDate(itemList.getStartDate()));
+                holder.tv_startDate.setText("Start : " + NewTasks.getDate(itemList.getStartDate(),false));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -316,7 +322,7 @@ public class AcceptedTasks extends Fragment {
 
         class TaskHolder extends RecyclerView.ViewHolder {
 
-            CustomFontTextView tv_description, tv_endDate, tv_startDate,tv_incentive;
+            TextView tv_description, tv_endDate, tv_startDate,tv_incentive,tv_status;
 //            CardView cv_taskCard;
 
 
@@ -327,6 +333,7 @@ public class AcceptedTasks extends Fragment {
                 tv_startDate = itemView.findViewById(R.id.tv_start_date);
                 tv_incentive = itemView.findViewById(R.id.tv_incentive);
 
+                tv_status=itemView.findViewById(R.id.tv_status);
                /* cv_taskCard = itemView.findViewById(R.id.cv_task_card);
                 cv_taskCard.setOnClickListener(new View.OnClickListener() {
                     @Override

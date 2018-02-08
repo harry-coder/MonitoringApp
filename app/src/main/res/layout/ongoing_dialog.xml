@@ -1,0 +1,176 @@
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+
+    >
+
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+
+        >
+
+
+        <TextView
+
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="25dp"
+            android:fontFamily="@font/alegreya_sans_sc"
+            android:text="Collect pictures"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/tv_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/tv_title"
+            android:layout_below="@+id/tv_title"
+            android:layout_marginEnd="10dp"
+            android:fontFamily="@font/alegreya_sans_sc"
+
+
+            android:padding="4dp"
+            android:text="Upload Images of 60 door hangers formsector 45, and 46
+
+Upload Images of 60 door hangers formsector 45
+Upload Images of 60 door hangers formsector 45Upload Images of 60 door hangers formsector 45
+"
+            android:textColor="#313641"
+            android:textSize="20sp" />
+
+        <TextView
+
+            android:id="@+id/tv_start_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/tv_title"
+
+            android:layout_below="@+id/tv_desc"
+
+            android:layout_marginTop="10dp"
+
+            android:drawablePadding="3dp"
+
+            android:drawableStart="@drawable/time_icon_darkbg"
+            android:ellipsize="end"
+
+            android:fontFamily="@font/alegreya_sans_sc"
+
+            android:maxLines="1"
+            android:text="Start :26h jan 2018"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_end_date"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/tv_title"
+            android:layout_below="@+id/tv_start_date"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="10dp"
+            android:drawablePadding="3dp"
+            android:drawableStart="@drawable/time_icon_darkbg"
+
+            android:ellipsize="end"
+            android:fontFamily="@font/alegreya_sans_sc"
+
+
+            android:maxLines="2"
+            android:text="End :28th jan 2018"
+
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18sp" />
+
+        <TableRow
+            android:id="@+id/row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_status"
+            android:layout_marginTop="60dp"
+            android:background="#f6f6f6">
+
+
+            <TextView
+                android:id="@+id/tv_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_weight="2"
+                android:background="?android:attr/selectableItemBackground"
+                android:drawablePadding="5dp"
+                android:fontFamily="@font/alegreya_sans_sc"
+                android:padding="5dp"
+                android:text="Cancel"
+                android:textAlignment="textEnd"
+                android:textColor="@color/rejectedColor"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_proceed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                android:background="?android:attr/selectableItemBackground"
+                android:drawablePadding="5dp"
+                android:fontFamily="@font/alegreya_sans_sc"
+                android:padding="5dp"
+
+                android:text="Proceed"
+                android:textAlignment="center"
+                android:textColor="@color/colorUnreadText"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <View
+            android:id="@+id/line2"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignStart="@+id/tv_title"
+            android:layout_below="@+id/tv_end_date"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorUnreadText" />
+
+
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/tv_start_date"
+
+            android:layout_below="@+id/line2"
+            android:layout_marginTop="8dp"
+            android:drawablePadding="5dp"
+            android:drawableStart="@drawable/expire_icon"
+            android:fontFamily="@font/alegreya_sans_sc"
+            android:text="Task Expires : 28th jan"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/im_moreOptions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:background="?android:attr/selectableItemBackground"
+            app:srcCompat="@drawable/menu_icon" />
+
+
+    </RelativeLayout>
+
+
+</android.support.v7.widget.CardView>

@@ -3,6 +3,8 @@ package firebasecloud.com.firebasecloud.TaskFragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -12,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -33,10 +36,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import firebasecloud.com.firebasecloud.Alert;
-import firebasecloud.com.firebasecloud.CustomElements.AcceptedTaskPojo;
-import firebasecloud.com.firebasecloud.CustomElements.CustomFontTextView;
 import firebasecloud.com.firebasecloud.CustomElements.RejectedTaskPojo;
-import firebasecloud.com.firebasecloud.LoginActivity;
 import firebasecloud.com.firebasecloud.R;
 import firebasecloud.com.firebasecloud.Volly.vollySingleton;
 
@@ -97,14 +97,20 @@ public class RejectedTasks extends Fragment {
 
         userRejectedTaskRecycleView.setAdapter(adapter);
 
-        getRejectedTaskListForUser(getActivity());
+      //  getRejectedTaskListForUser(getActivity());
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getRejectedTaskListForUser(getActivity());
+
+    }
 
     public void getRejectedTaskListForUser(final Context context) {
 
-        progressDialog.setMessage("Getting Rejected Task..");
+       progressDialog.setMessage("Getting Task..");
         progressDialog.show();
 
         final String taskUrl = "http://www.admin-panel.adecity.com/task/get-task";
@@ -113,7 +119,7 @@ public class RejectedTasks extends Fragment {
             public void run() {
 
                 HashMap<String, String> data = new HashMap<>();
-                data.put("user_id", LoginActivity.userId);
+                data.put("user_id", NewTasks.userId);
                 data.put("type", "Rejected");
 
 
@@ -151,7 +157,7 @@ public class RejectedTasks extends Fragment {
                                             @Override
                                             public void run() {
                                                 progressDialog.dismiss();
-                                                Alert.showAlertDialog("Something went wrong,try again", context);
+                                           //     Alert.showAlertDialog("No Rejected task", context);
 
                                             }
                                         });
@@ -241,6 +247,8 @@ public class RejectedTasks extends Fragment {
             taskItems.setStartDate(taskObject.getString("startDate"));
             taskItems.setIncentive(taskObject.getString("incentive"));
             taskItems.setEndDate(taskObject.getString("endDate"));
+            taskItems.setStatus(taskObject.getString("status"));
+
             taskItems.setTaskExpire(taskObject.getString("taskExpires"));
             taskItems.setTaskId(taskId);
 
@@ -279,15 +287,31 @@ public class RejectedTasks extends Fragment {
 
             RejectedTaskPojo itemList = taskList.get(position);
 
+            String status=itemList.getStatus();
             holder.tv_description.setText(itemList.getTitle());
             holder.tv_incentive.setText("₹"+itemList.getIncentive()+"/-");
             try {
-                holder.tv_endDate.setText("End: " + NewTasks.getDate(itemList.getEndDate()));
+                holder.tv_endDate.setText("End: " + NewTasks.getDate(itemList.getEndDate(),false));
 
-                holder.tv_startDate.setText("Start: " + NewTasks.getDate(itemList.getStartDate()));
+                holder.tv_startDate.setText("Start: " + NewTasks.getDate(itemList.getStartDate(),false));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+
+            if(status.equalsIgnoreCase("expired"))
+            {
+                GradientDrawable drawable = (GradientDrawable)holder.tv_status.getBackground();
+                drawable.setStroke(1, Color.parseColor("#F1C40F"));
+                holder.tv_status.setTextColor(Color.parseColor("#F1C40F"));
+                holder.view.setBackgroundColor(getResources().getColor(R.color.expiredColor));
+            }
+            else
+            {
+                GradientDrawable drawable = (GradientDrawable)holder.tv_status.getBackground();
+                drawable.setStroke(1, Color.parseColor("#FF4500"));
+                holder.view.setBackgroundColor(getResources().getColor(R.color.rejectedColor));
+            }
+            holder.tv_status.setText(status);
 
 
         }
@@ -311,7 +335,8 @@ public class RejectedTasks extends Fragment {
 
         class TaskHolder extends RecyclerView.ViewHolder {
 
-            CustomFontTextView tv_description, tv_endDate, tv_startDate,tv_incentive;
+            TextView tv_description, tv_endDate, tv_startDate,tv_incentive,tv_status;
+            View view;
 //            CardView cv_taskCard;
 
 
@@ -321,6 +346,8 @@ public class RejectedTasks extends Fragment {
                 tv_endDate = itemView.findViewById(R.id.tv_end_date);
                 tv_startDate = itemView.findViewById(R.id.tv_start_date);
 
+                view=itemView.findViewById(R.id.view);
+                tv_status=itemView.findViewById(R.id.tv_status);
                 tv_incentive=itemView.findViewById(R.id.tv_incentive);
                /* cv_taskCard = itemView.findViewById(R.id.cv_task_card);
                 cv_taskCard.setOnClickListener(new View.OnClickListener() {
@@ -338,5 +365,6 @@ public class RejectedTasks extends Fragment {
 
 
     }
+
 
 }

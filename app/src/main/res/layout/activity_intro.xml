@@ -82,6 +82,7 @@
                         android:layout_height="wrap_content"
                         android:text="Sign in"
                         android:textSize="21dp"
+                        android:background="?android:attr/selectableItemBackground"
 
                         android:textColor="#fff"
                         android:gravity="center"
@@ -107,6 +108,8 @@
                         android:text="Sign up"
                         android:textSize="21dp"
                         android:textColor="#fff"
+                        android:background="?android:attr/selectableItemBackground"
+
                         android:gravity="center"
                         android:layout_gravity="center"
                         />

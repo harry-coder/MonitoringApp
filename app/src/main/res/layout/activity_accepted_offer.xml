@@ -8,99 +8,120 @@
         android:layout_height="match_parent"
         tools:context="firebasecloud.com.firebasecloud.CallClasses.AcceptedOffer">
 
-        <RelativeLayout
-            android:id="@+id/rl_first"
+        <android.support.v7.widget.CardView
+            android:id="@+id/card1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#054d44"
+
+            app:cardElevation="50dp"
 
             >
 
-            <ImageView
-                android:id="@+id/okhleeImage"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="40dp"
+            <RelativeLayout
+                android:id="@+id/rl_first"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="#054d44"
 
-                android:src="@drawable/okhlee_launcher_white" />
+                >
 
-            <TextView
+                <ImageView
+                    android:id="@+id/okhleeImage"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="40dp"
 
-                android:id="@+id/tv_task"
-                android:layout_width="wrap_content"
+                    android:src="@drawable/okhlee_launcher_white" />
 
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/okhleeImage"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="OKHLEE CALLING"
-                android:textColor="#fff"
-                android:textSize="18sp" />
+                <TextView
 
-            <TextView
-                android:id="@+id/tv_newOffer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_task"
-                android:layout_centerHorizontal="true"
-                android:gravity="center"
-                android:text="New task for you"
-                android:textColor="#fff" />
+                    android:id="@+id/tv_task"
+                    android:layout_width="wrap_content"
 
-            <TextView
-                android:id="@+id/tv_rate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/okhleeImage"
 
-                android:layout_alignStart="@+id/tv_task"
-                android:layout_below="@+id/tv_newOffer"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/alegreya_sans_sc"
+                    android:gravity="center"
+                    android:text="OKHLEE CALLING"
 
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:drawableStart="@drawable/rupeesymbol"
-                android:text="150/-"
-                android:textColor="#fff"
+                    android:textColor="#fff"
+                    android:textSize="18sp" />
 
-                />
+                <TextView
+                    android:id="@+id/tv_newOffer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_task"
+                    android:layout_centerHorizontal="true"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/alegreya_sans_sc"
+                    android:gravity="center"
 
-            <TextView
-                android:id="@+id/tv_or"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_newOffer"
-                android:layout_marginEnd="10dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_toEndOf="@+id/tv_rate"
-                android:text="|"
+                    android:maxLines="2"
 
-                android:textColor="#fff"
+                    android:text="New task for you"
+                    android:textColor="#fff" />
+
+                <TextView
+                    android:id="@+id/tv_rate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:textAlignment="center"
 
 
-                android:textSize="20sp" />
+                    android:layout_alignEnd="@+id/tv_or"
+                    android:layout_below="@+id/tv_newOffer"
+                    android:layout_marginEnd="10dp"
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/alegreya_sans_sc"
+                    android:text="₹1500/-"
+                    android:textColor="#fff" />
 
-                android:layout_below="@+id/tv_newOffer"
+                <TextView
+                    android:id="@+id/tv_or"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_newOffer"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
 
-                android:layout_marginBottom="30dp"
-                android:layout_marginTop="10dp"
+                    android:text="|"
 
-                android:layout_toEndOf="@+id/tv_or"
-                android:drawablePadding="5dp"
-                android:drawableStart="@drawable/time_icon"
-                android:text="24 hrs"
-                android:textColor="#fff" />
-        </RelativeLayout>
+                    android:textColor="#fff"
+
+
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/tv_expire"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/tv_rate"
+                    android:layout_alignBottom="@+id/tv_rate"
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@+id/tv_or"
+                    android:drawablePadding="5dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:drawableStart="@drawable/time_icon"
+                    android:fontFamily="@font/alegreya_sans_sc"
+                    android:text="24hrs"
+                    android:textColor="#fff" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/rl_first"
+            android:layout_below="@+id/card1"
             android:background="#191919"
 
             >
@@ -115,13 +136,14 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
 
-
                 android:layout_marginBottom="100dp"
 
                 android:layout_marginStart="20dp"
+
                 android:layout_marginTop="120dp"
-                android:src="@drawable/accept_icon"
-                android:textAlignment="center">
+                android:background="?android:attr/selectableItemBackground"
+                android:textAlignment="center"
+                app:srcCompat="@drawable/accept_icon">
 
 
             </ImageView>
@@ -137,12 +159,12 @@
                 android:layout_marginBottom="100dp"
                 android:layout_marginStart="20dp"
 
-                android:background="@drawable/image_bg"
 
-                android:src="@drawable/cancel_icon"
-
+                android:background="?android:attr/selectableItemBackground"
                 android:textAlignment="center"
+
                 android:visibility="invisible"
+                app:srcCompat="@drawable/cancel_icon"
 
                 >
 
@@ -161,10 +183,11 @@
                 android:layout_marginBottom="100dp"
                 android:layout_marginStart="20dp"
 
-                android:background="@drawable/image_bg"
-                android:src="@drawable/call_icon"
+
+                android:background="?android:attr/selectableItemBackground"
                 android:textAlignment="center"
                 android:visibility="invisible"
+                app:srcCompat="@drawable/call_icon"
 
 
                 >
@@ -177,10 +200,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-
                 android:layout_alignTop="@+id/im_cancel"
-                android:layout_marginTop="50dp"
+
                 android:layout_centerHorizontal="true"
+                android:layout_marginTop="50dp"
+                android:fontFamily="@font/alegreya_sans_sc"
                 android:text="Swipe right to accept"
                 android:textColor="#fff" />
 

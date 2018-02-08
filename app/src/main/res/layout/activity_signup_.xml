@@ -1,264 +1,280 @@
 <layout>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
 
-    android:layout_width="match_parent"
-
-    android:layout_height="match_parent"
-    android:background="#fff">
-
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
+
         android:layout_height="match_parent"
+        android:background="#fff">
 
-        android:fillViewport="true"
-
-        android:orientation="vertical">
-
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
 
-            tools:context="com.example.harpreet.scrapper.LoginActivity">
+            android:fillViewport="true"
 
-            <ImageView
-                android:id="@+id/shimmer_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="55dp"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="60dp"
+            android:orientation="vertical">
 
-                android:adjustViewBounds="true"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/okhlee_logo" />
-
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/sp_choice"
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/shimmer_tv"
-                android:layout_marginEnd="30dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="50dp">
+                tools:context="com.example.harpreet.scrapper.LoginActivity">
 
-                <EditText
-                    android:id="@+id/name"
+                <ImageView
+                    android:id="@+id/shimmer_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="55dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="60dp"
+
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/okhlee_logo" />
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/sp_choice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableEnd="@drawable/name"
-                    android:drawableRight="@drawable/name"
-                    android:hint="@string/name"
 
-                    android:inputType="textEmailAddress" />
-            </android.support.design.widget.TextInputLayout>
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/shimmer_tv"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="50dp">
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/passwordwrapper"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                    <EditText
+                        android:id="@+id/name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/name"
+                        android:drawableRight="@drawable/name"
+                        android:hint="@string/name"
 
-                android:layout_alignEnd="@+id/sp_choice"
+                        android:inputType="textEmailAddress" />
+                </android.support.design.widget.TextInputLayout>
 
-                android:layout_alignLeft="@+id/sp_choice"
-                android:layout_alignRight="@+id/sp_choice"
-                android:layout_alignStart="@+id/sp_choice"
-                android:layout_below="@+id/sp_choice"
-                android:layout_marginTop="34dp">
-
-                <EditText
-                    android:id="@+id/mobilenumber"
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/passwordwrapper"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableEnd="@drawable/mobile"
-                    android:drawableRight="@drawable/mobile"
-                    android:hint="@string/mobile_number"
-                    android:inputType="numberSigned"
 
-                    android:maxLength="10" />
+                    android:layout_alignEnd="@+id/sp_choice"
+
+                    android:layout_alignLeft="@+id/sp_choice"
+                    android:layout_alignRight="@+id/sp_choice"
+                    android:layout_alignStart="@+id/sp_choice"
+                    android:layout_below="@+id/sp_choice"
+                    android:layout_marginTop="34dp">
+
+                    <EditText
+                        android:id="@+id/mobilenumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/mobile"
+                        android:drawableRight="@drawable/mobile"
+                        android:hint="@string/mobile_number"
+                        android:inputType="numberSigned"
+
+                        android:maxLength="10" />
 
 
-            </android.support.design.widget.TextInputLayout>
+                </android.support.design.widget.TextInputLayout>
 
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/textpassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/passwordwrapper"
-
-                android:layout_alignLeft="@+id/passwordwrapper"
-                android:layout_alignRight="@+id/passwordwrapper"
-                android:layout_alignStart="@+id/passwordwrapper"
-                android:layout_below="@+id/passwordwrapper"
-                android:layout_marginTop="31dp">
-
-                <EditText
-                    android:id="@+id/password"
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/textpassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableEnd="@drawable/password"
-                    android:drawableRight="@drawable/password"
-                    android:hint="@string/password"
+                    android:layout_alignEnd="@+id/passwordwrapper"
 
-                    android:inputType="textPassword" />
+                    android:layout_alignLeft="@+id/passwordwrapper"
+                    android:layout_alignRight="@+id/passwordwrapper"
+                    android:layout_alignStart="@+id/passwordwrapper"
+                    android:layout_below="@+id/passwordwrapper"
+                    android:layout_marginTop="31dp">
 
-            </android.support.design.widget.TextInputLayout>
+                    <EditText
+                        android:id="@+id/password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/password"
+                        android:drawableRight="@drawable/password"
+                        android:hint="@string/password"
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/confirmpasswordwrapper"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                        android:inputType="textPassword" />
 
-                android:layout_alignEnd="@+id/textpassword"
-                android:layout_alignLeft="@+id/textpassword"
-                android:layout_alignRight="@+id/textpassword"
+                </android.support.design.widget.TextInputLayout>
 
-                android:layout_alignStart="@+id/textpassword"
-                android:layout_below="@+id/textpassword"
-                android:layout_marginTop="31dp">
-
-                <EditText
-                    android:id="@+id/confirm_password"
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/confirmpasswordwrapper"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/confirm_password"
-                    android:inputType="textPassword"
 
-                    />
+                    android:layout_alignEnd="@+id/textpassword"
+                    android:layout_alignLeft="@+id/textpassword"
+                    android:layout_alignRight="@+id/textpassword"
 
+                    android:layout_alignStart="@+id/textpassword"
+                    android:layout_below="@+id/textpassword"
+                    android:layout_marginTop="31dp">
 
-            </android.support.design.widget.TextInputLayout>
+                    <EditText
+                        android:id="@+id/confirm_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/confirm_password"
+                        android:inputType="textPassword"
 
-            <Spinner
-                android:id="@+id/sp_user_type"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_alignEnd="@+id/textpassword"
-                android:layout_alignLeft="@+id/textpassword"
-                android:layout_alignRight="@+id/textpassword"
-                android:layout_alignStart="@+id/textpassword"
-                android:background="@drawable/spinner_background"
-
-                android:layout_below="@+id/confirmpasswordwrapper"
-                android:layout_marginTop="30dp"
+                        />
 
 
-                android:entries="@array/user_type"
-                android:spinnerMode="dialog" />
-            <TextView
-                android:id="@+id/tv_empty_warning"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/sp_user_type"
-                android:layout_alignStart="@+id/sp_user_type"
-                android:layout_below="@+id/sp_user_type"
-                android:layout_marginTop="5dp"
-                android:visibility="gone"
+                </android.support.design.widget.TextInputLayout>
 
-                android:text="Please select User Type"
+                <Spinner
+                    android:id="@+id/sp_city"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_alignEnd="@+id/textpassword"
+                    android:layout_alignLeft="@+id/textpassword"
+                    android:layout_alignRight="@+id/textpassword"
+                    android:layout_alignStart="@+id/textpassword"
+                    android:background="@drawable/spinner_background"
+                    android:fontFamily="@font/alegreya_sans_sc"
 
-
-                android:textSize="12sp" />
-
-
-            <Spinner
-                android:id="@+id/sp_city"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_alignEnd="@+id/textpassword"
-                android:layout_alignLeft="@+id/textpassword"
-                android:layout_alignRight="@+id/textpassword"
-                android:layout_alignStart="@+id/textpassword"
-
-                android:layout_below="@+id/sp_user_type"
-                android:layout_marginTop="30dp"
-
-                android:background="@drawable/spinner_background"
-
-                android:entries="@array/city_type"
-                android:spinnerMode="dialog" />
-
-            <TextView
-                android:id="@+id/tv_empty_city_warning"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/sp_user_type"
-                android:layout_alignStart="@+id/sp_user_type"
-                android:layout_below="@+id/sp_city"
-                android:layout_marginTop="5dp"
-                android:visibility="gone"
-
-                android:text="Please select City"
+                    android:layout_below="@+id/confirmpasswordwrapper"
+                    android:layout_marginTop="30dp"
 
 
-                android:textSize="12sp" />
+                    android:spinnerMode="dialog" />
+                <TextView
+                    android:id="@+id/tv_empty_warning"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/sp_city"
+                    android:layout_alignStart="@+id/sp_city"
+                    android:layout_below="@+id/sp_city"
+                    android:layout_marginTop="5dp"
+                    android:visibility="gone"
+                    android:fontFamily="@font/alegreya_sans_sc"
 
-            <Button
-                android:id="@+id/btnSignIn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-
-                android:layout_alignEnd="@+id/confirmpasswordwrapper"
-                android:layout_alignLeft="@+id/confirmpasswordwrapper"
-                android:layout_alignRight="@+id/confirmpasswordwrapper"
-                android:layout_alignStart="@+id/confirmpasswordwrapper"
-                android:layout_below="@+id/sp_city"
-                android:layout_marginBottom="10dp"
-
-                android:layout_marginTop="38dp"
+                    android:text="Please select City"
 
 
-                android:background="@drawable/button_background"
-                android:text="@string/sign_up"
-                android:textColor="@android:color/white"
-                android:textSize="18sp" />
+                    android:textSize="12sp" />
+                <TextView
+                    android:id="@+id/tv_selectLocality"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                   android:layout_below="@+id/sp_city"
+                    android:layout_marginTop="10dp"
+                    android:visibility="visible"
+                    android:layout_alignEnd="@+id/sp_city"
 
-            <android.support.v7.widget.CardView
-                android:id="@+id/cardLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
+                    android:text="Select Locality"
 
-                android:layout_below="@+id/btnSignIn"
-                android:layout_marginTop="10dp"
-                app:cardElevation="10dp"
-                app:cardCornerRadius="5dp"
-                app:cardMaxElevation="10dp">
+                    android:fontFamily="@font/alegreya_sans_sc"
 
+                    android:textSize="15sp" />
+
+
+                <Spinner
+                    android:id="@+id/sp_user_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_alignEnd="@+id/textpassword"
+                    android:layout_alignLeft="@+id/textpassword"
+                    android:layout_alignRight="@+id/textpassword"
+                    android:layout_alignStart="@+id/textpassword"
+                    android:fontFamily="@font/alegreya_sans_sc"
+
+                    android:layout_below="@+id/tv_selectLocality"
+                    android:layout_marginTop="30dp"
+
+                    android:background="@drawable/spinner_background"
+
+                    android:spinnerMode="dialog" />
 
                 <TextView
-                    android:id="@+id/tv_signin"
+                    android:id="@+id/tv_empty_city_warning"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/sp_user_type"
+                    android:layout_alignStart="@+id/sp_user_type"
+                    android:layout_below="@+id/sp_user_type"
+                    android:layout_marginTop="5dp"
+                    android:visibility="gone"
+                    android:fontFamily="@font/alegreya_sans_sc"
+
+                    android:text="Please select User Type"
+
+
+                    android:textSize="12sp" />
+                <Button
+                    android:id="@+id/btnSignIn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
+                    android:fontFamily="@font/alegreya_sans_sc"
 
-                    android:fontFamily="sans-serif-medium"
-                    android:gravity="center"
+                    android:layout_alignEnd="@+id/confirmpasswordwrapper"
+                    android:layout_alignLeft="@+id/confirmpasswordwrapper"
+                    android:layout_alignRight="@+id/confirmpasswordwrapper"
+                    android:layout_alignStart="@+id/confirmpasswordwrapper"
+                    android:layout_below="@+id/sp_user_type"
+                    android:layout_marginBottom="10dp"
 
-                    android:padding="15dp"
-                    android:text="@string/existing_user_login_here"
-
-                    android:textColor="#0f5e54"
-                    android:textSize="20sp"
-                    android:textStyle="normal"
-
-                    />
-            </android.support.v7.widget.CardView>
-
-        </RelativeLayout>
+                    android:layout_marginTop="38dp"
 
 
-    </ScrollView>
+                    android:background="@drawable/button_background"
+                    android:text="@string/sign_up"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp" />
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cardLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+
+                    android:layout_below="@+id/btnSignIn"
+                    android:layout_marginTop="10dp"
+                    app:cardElevation="10dp"
+                    app:cardCornerRadius="5dp"
+                    app:cardMaxElevation="10dp">
 
 
-</RelativeLayout>
+                    <TextView
+                        android:id="@+id/tv_signin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:fontFamily="@font/alegreya_sans_sc"
+
+                        android:gravity="center"
+
+                        android:padding="15dp"
+                        android:text="@string/existing_user_login_here"
+
+                        android:textColor="#0f5e54"
+                        android:textSize="20sp"
+                        android:textStyle="normal"
+
+                        />
+                </android.support.v7.widget.CardView>
+
+            </RelativeLayout>
+
+
+        </ScrollView>
+
+
+    </RelativeLayout>
 
 </layout>

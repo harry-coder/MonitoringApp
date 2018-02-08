@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.PowerManager;
 import android.support.annotation.RequiresApi;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -21,29 +22,19 @@ import firebasecloud.com.firebasecloud.CallClasses.AcceptedOffer;
  */
 
 public class FirebaseMessangingService extends FirebaseMessagingService {
-    String message;
-    int NOTIFICATION_ID = 100;
-
+     public static JSONObject messageObject;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
 
 
-        System.out.println(remoteMessage.getData().toString());
 
 
         Map<String, String> params = remoteMessage.getData();
-        JSONObject object = new JSONObject(params);
+         messageObject = new JSONObject(params);
 
-        try {
 
-            message = object.getString("message");
-
-            System.out.println("This is message " + message);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
 
         Intent intent = new Intent(this, AcceptedOffer.class);

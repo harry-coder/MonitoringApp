@@ -11,6 +11,26 @@ public class TaskItems_POJO {
     String incentive;
     String taskId;
 
+    public int getImagesToUpload() {
+        return imagesToUpload;
+    }
+
+    public void setImagesToUpload(int imagesToUpload) {
+        this.imagesToUpload = imagesToUpload;
+    }
+
+    int imagesToUpload;
+
+    public String getGlobal_taskId() {
+        return global_taskId;
+    }
+
+    public void setGlobal_taskId(String global_taskId) {
+        this.global_taskId = global_taskId;
+    }
+
+    String global_taskId;
+
     public String getStatus() {
         return status;
     }

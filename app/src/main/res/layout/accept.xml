@@ -3,6 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/ongoingCard"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:clickable="true"
     android:layout_marginBottom="8dp"
     >
 
@@ -17,7 +20,7 @@
             android:layout_alignParentTop="true"
             android:background="@color/colorUnreadText" />
 
-        <firebasecloud.com.firebasecloud.CustomElements.CustomFontTextView
+        <TextView
             android:id="@+id/tv_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -25,6 +28,8 @@
             android:layout_marginTop="30dp"
             android:ellipsize="end"
             android:maxLines="2"
+            android:fontFamily="@font/alegreya_sans_sc"
+
             android:layout_marginEnd="5dp"
             android:padding="10dp"
             android:text="Expired"
@@ -51,7 +56,7 @@
             android:text="O"
             android:textSize="20sp" />
 
-        <firebasecloud.com.firebasecloud.CustomElements.CustomFontTextView
+        <TextView
             android:id="@+id/tv_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -60,6 +65,7 @@
             android:layout_marginTop="30dp"
             android:layout_toEndOf="@+id/horizontal_view"
             android:ellipsize="end"
+            android:fontFamily="@font/alegreya_sans_sc"
 
             android:textSize="20sp"
             android:maxLines="2"
@@ -77,13 +83,14 @@
 
             >
 
-            <firebasecloud.com.firebasecloud.CustomElements.CustomFontTextView
+            <TextView
                 android:id="@+id/tv_active_task_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_weight="1"
                 android:drawablePadding="5dp"
+                android:fontFamily="@font/alegreya_sans_sc"
 
                 android:drawableStart="@drawable/accept_clock_icon"
                 android:padding="5dp"
@@ -91,7 +98,7 @@
                 android:textSize="18sp" />
 
 
-            <firebasecloud.com.firebasecloud.CustomElements.CustomFontTextView
+            <TextView
                 android:id="@+id/tv_active_end_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -100,19 +107,22 @@
                 android:drawablePadding="5dp"
                 android:drawableStart="@drawable/reject_clock_icon"
                 android:padding="5dp"
+                android:fontFamily="@font/alegreya_sans_sc"
+
                 android:text="End: 28th jan 2018"
                 android:textSize="18sp" />
         </TableRow>
-        <firebasecloud.com.firebasecloud.CustomElements.CustomFontTextView
+        <TextView
             android:id="@+id/tv_task_incentive"
 
             android:layout_width="80dp"
-            android:layout_height="25dp"
+            android:layout_height="28dp"
             android:layout_marginTop="10dp"
             android:textAlignment="center"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="17dp"
             android:background="@drawable/round_background"
+            android:fontFamily="@font/alegreya_sans_sc"
 
             android:padding="5dp"
             android:text="₹150/-" />

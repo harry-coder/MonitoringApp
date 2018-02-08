@@ -85,7 +85,7 @@
 
                 <FrameLayout
                     android:id="@+id/fl_login"
-                    android:layout_width="match_parent"
+                    android:layout_width="300dp"
                     android:layout_height="45dp"
                     android:layout_below="@+id/passwordwrapper"
 
@@ -96,9 +96,6 @@
                     android:clickable="true"
                     android:elevation="5dp"
                     android:foreground="?selectableItemBackground"
-                    android:layout_alignEnd="@+id/sp_choice"
-                    android:layout_alignStart="@+id/sp_choice"
-
 
 
                     >
@@ -107,7 +104,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:fontFamily="sans-serif-medium"
+                        android:fontFamily="@font/alegreya_sans_sc"
+
                         android:gravity="center"
                         android:text="@string/login"
                         android:textColor="#ffffff"
@@ -123,6 +121,17 @@
 
                 </FrameLayout>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Forgot Password?"
+                    android:padding="10dp"
+                    android:fontFamily="@font/alegreya_sans_sc"
+
+                    android:onClick="forgotPassword"
+                    android:layout_below="@+id/fl_login"
+                    android:layout_centerHorizontal="true"
+                    />
 
 
                 <!--   <Button
@@ -189,9 +198,9 @@
                         android:id="@+id/tv_signin"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/alegreya_sans_sc"
 
 
-                        android:fontFamily="sans-serif-medium"
                         android:gravity="center"
 
                         android:padding="15dp"
@@ -219,7 +228,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/welcome"
+
                 android:src="@drawable/okhlee_monitor5"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"

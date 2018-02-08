@@ -18,7 +18,9 @@ public class FcmInstanceIdService extends FirebaseInstanceIdService {
 
         String tokenRefereshed= FirebaseInstanceId.getInstance().getToken();
 
-        Paper.book().write("token",tokenRefereshed);
+        if (tokenRefereshed != null) {
+            Paper.book().write("token",tokenRefereshed);
+        }
 
     }
 }

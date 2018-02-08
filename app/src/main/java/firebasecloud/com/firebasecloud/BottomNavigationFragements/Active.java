@@ -89,10 +89,8 @@ public class Active extends Fragment {
                 return OnGoing.newInstance("", "");
 
             } else if (position == 1)
-                return Pending.newInstance("", "");
-
-            else if (position == 2)
                 return Complete.newInstance("", "");
+
 
             else return null;
 
@@ -101,7 +99,7 @@ public class Active extends Fragment {
 
         @Override
         public int getCount() {
-            return 3;
+            return 2;
         }
 
         @Override
@@ -110,10 +108,8 @@ public class Active extends Fragment {
             if (position == 0) {
                 return "On Going";
             } else if (position == 1) {
-                return "Pending ";
-            } else if (position == 2) {
                 return "Completed";
-            } else return null;
+            }  else return null;
 
 
         }

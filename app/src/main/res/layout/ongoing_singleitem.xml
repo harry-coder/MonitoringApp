@@ -10,6 +10,8 @@
         android:layout_width="0dp"
         android:id="@+id/cv_task_card"
         android:layout_height="100dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:clickable="true"
 
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -31,7 +33,7 @@
                 android:scaleType="fitStart"
                 app:srcCompat="@mipmap/transaction_dialogicon" />
 
-            <firebasecloud.com.firebasecloud.CustomElements.CustomFontTextView
+            <TextView
                 android:id="@+id/tv_transaction_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -39,17 +41,18 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="5dp"
+                android:fontFamily="@font/alegreya_sans_sc"
+
                 android:layout_toEndOf="@+id/im_okhlee_icon"
                 android:layout_toRightOf="@+id/im_okhlee_icon"
 
-                android:fontFamily="sans-serif-medium"
                 android:text="Task :"
 
                 android:textColor="#313641"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                />
 
-            <firebasecloud.com.firebasecloud.CustomElements.CustomFontTextView
+            <TextView
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -59,14 +62,15 @@
                 android:layout_toEndOf="@+id/tv_transaction_id"
                 android:layout_toStartOf="@+id/tv_incentive"
                 android:ellipsize="end"
-                android:fontFamily="sans-serif-medium"
+                android:transitionName="task_title"
+                android:fontFamily="@font/alegreya_sans_sc"
 
                 android:maxLines="2"
                 android:text="Upload 50 images"
                 android:textSize="18sp"
-                android:typeface="serif" />
+             />
 
-            <firebasecloud.com.firebasecloud.CustomElements.CustomFontTextView
+            <TextView
                 android:id="@+id/tv_start_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -74,11 +78,13 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignStart="@+id/im_okhlee_icon"
                 android:layout_marginBottom="5dp"
-                android:textSize="15dp"
+                android:fontFamily="@font/alegreya_sans_sc"
+
+                android:textSize="15sp"
                 android:text="Start Date:"
                />
 
-            <firebasecloud.com.firebasecloud.CustomElements.CustomFontTextView
+            <TextView
                 android:id="@+id/tv_incentive"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -89,10 +95,10 @@
                 android:layout_marginRight="20dp"
                 android:text=" ₹150/-"
                 android:layout_toEndOf="@+id/tv_task"
-                android:textStyle="bold"
                 android:textSize="18sp"
                 android:textColor="#313641"
-                android:typeface="serif" />
+                android:fontFamily="@font/alegreya_sans_sc"
+                />
 
             <ImageView
                 android:id="@+id/tv_approval"

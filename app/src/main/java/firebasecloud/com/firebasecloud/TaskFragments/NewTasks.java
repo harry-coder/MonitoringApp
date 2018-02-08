@@ -1,9 +1,11 @@
 package firebasecloud.com.firebasecloud.TaskFragments;
 
 
+import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -12,10 +14,12 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.ViewFlipper;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -34,8 +38,6 @@ import org.json.JSONObject;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -43,12 +45,12 @@ import java.util.Map;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import firebasecloud.com.firebasecloud.Alert;
-import firebasecloud.com.firebasecloud.CustomElements.CustomFontTextView;
 import firebasecloud.com.firebasecloud.CustomElements.TaskItems_POJO;
+import firebasecloud.com.firebasecloud.DialogThemedActivity;
 import firebasecloud.com.firebasecloud.LoginActivity;
-import firebasecloud.com.firebasecloud.MainActivity;
 import firebasecloud.com.firebasecloud.R;
 import firebasecloud.com.firebasecloud.Volly.vollySingleton;
+import io.paperdb.Paper;
 
 
 public class NewTasks extends Fragment {
@@ -56,19 +58,21 @@ public class NewTasks extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    SweetAlertDialog sweetAlertDialogialog;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     private ProgressDialog progressDialog;
     private Handler handler;
-    public ArrayList<TaskItems_POJO> globalTaskList;
+    public static ArrayList<TaskItems_POJO> globalTaskList;
     private RequestQueue queue;
     public static String taskId;
     RecyclerView rv_userTaskRecycleView;
     UserTaskListAdapter adapter;
-    public AlertDialog dialog = null;
+    public static int specificTaskPosition;
 
+    ViewFlipper flipper;
+    public static String userId;
+   static  String exactime[];
     public NewTasks() {
         // Required empty public constructor
     }
@@ -93,6 +97,13 @@ public class NewTasks extends Fragment {
         handler = new Handler();
         globalTaskList = new ArrayList<>();
         queue = vollySingleton.getInstance().getRequestQueue();
+
+        if(Paper.book().exist("userId"))
+        {
+            userId=Paper.book().read("userId");
+
+        }
+
     }
 
     @Override
@@ -106,16 +117,27 @@ public class NewTasks extends Fragment {
         rv_userTaskRecycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
         rv_userTaskRecycleView.setAdapter(adapter);
 
-        getTaskListForUser(getActivity());
+        flipper=view.findViewById(R.id.flipper);
+
+//        getTaskListForUser(getActivity());
 
 
         return view;
     }
 
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getTaskListForUser(getActivity());
+
+
+    }
+
+
     public void getTaskListForUser(final Context context) {
 
-        progressDialog.setMessage("Getting On Going Task..");
+        progressDialog.setMessage("Getting Task..");
         progressDialog.show();
 
         final String taskUrl = "http://www.admin-panel.adecity.com/task/get-task";
@@ -124,7 +146,7 @@ public class NewTasks extends Fragment {
             public void run() {
 
                 HashMap<String, String> data = new HashMap<>();
-                data.put("user_id", LoginActivity.userId);
+                data.put("user_id", userId);
                 data.put("type", "Unconfirmed");
 
 
@@ -133,7 +155,6 @@ public class NewTasks extends Fragment {
                             @Override
                             public void onResponse(final JSONObject response) {
 
-                                System.out.println(response);
 
                                 try {
                                     boolean success = response.getBoolean("success");
@@ -154,7 +175,7 @@ public class NewTasks extends Fragment {
                                                 adapter.setSource(globalTaskList);
 
                                             }
-                                        }, 2000);
+                                        }, 1000);
 
                                     } else {
 
@@ -162,8 +183,9 @@ public class NewTasks extends Fragment {
                                             @Override
                                             public void run() {
                                                 progressDialog.dismiss();
-                                                Alert.showAlertDialog("Something went wrong,try again", context);
+                                                //  Alert.showAlertDialog("No tasks yet!", context);
 
+                                                flipper.showNext();
                                             }
                                         });
 
@@ -293,7 +315,7 @@ public class NewTasks extends Fragment {
             holder.tv_title.setText(itemList.getTitle());
             holder.tv_incentive.setText("₹" + itemList.getIncentive() + "/-");
             try {
-                holder.tv_startDate.setText("Start Date: " + getDate(itemList.getStartDate()));
+                holder.tv_startDate.setText("Start Date: " + getDate(itemList.getStartDate(),false));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -308,19 +330,22 @@ public class NewTasks extends Fragment {
         }
 
         public void setSource(ArrayList<TaskItems_POJO> list) {
-            if (list.size() != 0) {
+
+
+            System.out.println("Inside this "+list.size());
+         //   if (list.size() >= 0) {
                 this.taskList = list;
 
                 notifyItemRangeRemoved(0, taskList.size());
 
                 notifyDataSetChanged();
-            }
+           // }
 
         }
 
         class TaskHolder extends RecyclerView.ViewHolder {
 
-            CustomFontTextView tv_title, tv_incentive, tv_startDate;
+            TextView tv_title, tv_incentive, tv_startDate;
             CardView cv_taskCard;
 
 
@@ -334,10 +359,26 @@ public class NewTasks extends Fragment {
                 cv_taskCard.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Intent intent = new Intent(context, DialogThemedActivity.class);
 
                         try {
-                            AcceptRejectDialog(context, getAdapterPosition());
-                        } catch (ParseException e) {
+                            ActivityOptions options = null;
+                            Pair[] pair = new Pair[1];
+
+                            pair[0] = new Pair<View, String>(tv_title, "task_title");
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                options = ActivityOptions.makeSceneTransitionAnimation(getActivity(), pair);
+                            }
+
+
+                            specificTaskPosition = getAdapterPosition();
+                            startActivity(intent,options.toBundle());
+
+                            //    startActivity(new Intent(context, DialogThemedActivity.class));
+
+                            //  AcceptRejectDialog(context, getAdapterPosition());
+
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
 
@@ -350,219 +391,31 @@ public class NewTasks extends Fragment {
 
 
 
-        public void AcceptRejectDialog(final Context context, int taskPosition) throws ParseException {
-            final AlertDialog.Builder malert = new AlertDialog.Builder(context);
-            LayoutInflater inflater = LayoutInflater.from(context);
-            View dialogView = inflater.inflate(R.layout.accept_reject_dialog, null);
-
-
-            final TaskItems_POJO selectedTask = globalTaskList.get(taskPosition);
-
-            final String startDate = selectedTask.getStartDate();
-            String endDate = selectedTask.getEndDate();
-
-            String expireDate = selectedTask.getTaskExpire();
-
-
-            TextView tv_reject = dialogView.findViewById(R.id.tv_reject);
-            TextView tv_accept = dialogView.findViewById(R.id.tv_accept);
-
-            TextView tv_title = dialogView.findViewById(R.id.tv_title);
-            TextView tv_description = dialogView.findViewById(R.id.tv_desc);
-            TextView tv_startDate = dialogView.findViewById(R.id.tv_start_date);
-            TextView tv_endDate = dialogView.findViewById(R.id.tv_end_date);
-            TextView tv_expireDate = dialogView.findViewById(R.id.tv_expire);
-
-
-            tv_title.setText(selectedTask.getTitle());
-            tv_description.setText(selectedTask.getDescription());
-            tv_startDate.setText(getDate(startDate));
-            tv_endDate.setText(getDate(endDate));
-            tv_expireDate.setText("Expire : " + getDate(expireDate));
-
-            tv_reject.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    TaskConfirmation(false, selectedTask.getTaskId(), startDate);
-
-                    dialog.dismiss();
-
-                }
-            });
-
-
-            tv_accept.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //    String reason = et_reason.getText().toString();
-                    TaskConfirmation(true, selectedTask.getTaskId(), startDate);
-
-                    dialog.dismiss();
-
-                }
-            });
-
-
-            malert.setView(dialogView);
-
-            dialog = malert.create();
-            dialog.show();
-
-
-        }
-
-        private void TaskConfirmation(final boolean isAccepted, final String taskId, final String date) {
-            progressDialog.setMessage("Updating task list");
-            progressDialog.show();
-
-            final String taskUrl = "http://www.admin-panel.adecity.com/task/task-action";
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-
-                    HashMap<String, String> data = new HashMap<>();
-                    data.put("user_id", LoginActivity.userId);
-                    data.put("isAccepted", String.valueOf(isAccepted));
-                    data.put("task_id", taskId);
-                    data.put("date", date);
-
-                    System.out.println("isAccepted "+isAccepted);
-                    System.out.println("date "+date);
-
-                    JsonObjectRequest request_json = new JsonObjectRequest(Request.Method.POST, taskUrl, new JSONObject(data),
-                            new Response.Listener<JSONObject>() {
-                                @Override
-                                public void onResponse(final JSONObject response) {
-
-                                    System.out.println(response);
-
-                                    try {
-                                        boolean success = response.getBoolean("success");
-
-
-                                        if (success) {
-                                            handler.postDelayed(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    progressDialog.dismiss();
-
-                                                    if (isAccepted) {
-                                                        sweetAlertDialogialog = Alert.showAlertDialog("Thanks for Accepting this task. Your task has been added to Accepted section", getActivity());
-                                                       sweetAlertDialogialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                                            @Override
-                                                            public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                                                startActivity(new Intent(getActivity(), MainActivity.class));
-
-                                                            }
-                                                        });
-                                                    } else {
-
-                                                 sweetAlertDialogialog=Alert.showAlertDialog("You have rejected this task. Your task has been added to Rejected section", getActivity());
-                                                        sweetAlertDialogialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                                            @Override
-                                                            public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                                                startActivity(new Intent(getActivity(), MainActivity.class));
-
-                                                            }
-                                                        });
-                                                    }
-
-
-                                                }
-                                            }, 1000);
-
-                                        } else {
-
-                                            handler.post(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    progressDialog.dismiss();
-                                                    Alert.showAlertDialog("Something went wrong,try again", context);
-
-                                                }
-                                            });
-
-                                            // btnSignIn.setProgress(100);
-
-                                        }
-
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-
-                                }
-                            }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            NetworkResponse networkResponse = error.networkResponse;
-                            String errorMessage = "Unknown error";
-                            if (networkResponse == null) {
-                                if (error.getClass().equals(TimeoutError.class)) {
-                                    errorMessage = "Request timeout";
-                                } else if (error.getClass().equals(NoConnectionError.class)) {
-                                    errorMessage = "Failed to connect server";
-                                }
-                                progressDialog.dismiss();
-                            } else {
-                                String result = new String(networkResponse.data);
-                                try {
-                                    JSONObject response = new JSONObject(result);
-                                    String status = response.getString("status");
-                                    String message = response.getString("message");
-
-                                    Log.e("Error Status", status);
-                                    Log.e("Error Message", message);
-
-                                    if (networkResponse.statusCode == 404) {
-                                        errorMessage = "Resource not found";
-                                    } else if (networkResponse.statusCode == 401) {
-                                        errorMessage = message + " Please login again";
-                                    } else if (networkResponse.statusCode == 400) {
-                                        errorMessage = message + " Check your inputs";
-                                    } else if (networkResponse.statusCode == 500) {
-                                        errorMessage = message + " Something is getting wrong";
-                                    }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                                progressDialog.dismiss();
-                            }
-                            Alert.showAlertDialog(errorMessage, getActivity());
-                            error.printStackTrace();
-                        }
-                    }); /*{
-
-
-                        @Override
-                        public Map<String, String> getHeaders() throws AuthFailureError {
-                            HashMap<String, String> headers = new HashMap<String, String>();
-                            headers.put("Content-Type", "application/x-www-form-urlencoded");
-                            return headers;
-                        }
-
-                    };*/
-
-                    queue.add(request_json);
-
-
-                }
-            }).start();
-
-        }
-
     }
-    public static String getDate(String date) throws ParseException {
+
+    public static String getDate(String date,boolean isTimeRequired) throws ParseException {
         if (date != null) {
             String newdate[] = date.split("T");
 
-            Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(newdate[0]);
+            Date  date1 = new SimpleDateFormat("yyyy-MM-dd").parse(newdate[0]);
+
+            if(isTimeRequired)
+            {
+                 exactime=newdate[1].split("\\:");
+
+
+              //  Date time = new SimpleDateFormat("HH:mm:ss").parse(exactime[0]);
+
+                return exactime[0]+"hrs, "+DateFormat.getDateInstance().format(date1);
+            }
 
             return DateFormat.getDateInstance().format(date1);
         } else {
             return null;
         }
     }
+
+
 
 
 }

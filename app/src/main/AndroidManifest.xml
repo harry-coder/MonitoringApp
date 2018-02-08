@@ -16,9 +16,9 @@
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/okhlee_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/okhlee_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
@@ -47,11 +47,14 @@
         <activity android:name=".CallClasses.AcceptedOffer" />
         <activity android:name=".CallClasses.NotificationDismiss" />
         <activity android:name=".LoginActivity">
-            <!--<intent-filter>
+
+            <!--
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
         <activity android:name=".Signup_Activity" />
         <activity android:name=".TakePictureTask" />
@@ -61,13 +64,17 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-
         </activity>
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <activity
+            android:name=".DialogThemedActivity"
+            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"></activity>
+        <activity android:name=".ForgotPassword_Activity" />
+        <activity android:name=".SearchLocality"></activity>
     </application>
 
 </manifest>

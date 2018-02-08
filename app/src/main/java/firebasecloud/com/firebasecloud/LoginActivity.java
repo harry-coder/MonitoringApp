@@ -146,6 +146,7 @@ public class LoginActivity extends AppCompatActivity {
             fadeOutTextAndShowProgressDialog();
 
 
+
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -169,10 +170,14 @@ public class LoginActivity extends AppCompatActivity {
                                         if (success) {
 
 
-                                     //       progressDialog.dismiss();
+                                            //deleting the user logout out status because he is loging in now
+                                            Paper.book().delete("isUserLoggedOut");
                                             userId = response.getString("userid");
 
-                                            System.out.println("userID "+userId);
+                                            if(userId!=null)
+                                            {
+                                                Paper.book().write("userId",userId);
+                                            }
 
                                             nextAction();
 
@@ -292,53 +297,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    public boolean checkLocationService() {
-        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        boolean gps_enabled = false;
-        boolean network_enabled = false;
-
-        try {
-            gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        } catch (Exception ex) {
-        }
-
-        try {
-            network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-        } catch (Exception ex) {
-        }
-
-        if (!gps_enabled && !network_enabled) {
-            // notify user
-            progressDialog.dismiss();
-            AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-            dialog.setMessage(R.string.enable_location);
-            dialog.setPositiveButton(R.string.enable_it, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                    // TODO Auto-generated method stub
-                    Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                    startActivity(myIntent);
-
-                }
-            });
-            dialog.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                    checkLocationService();
-
-                    paramDialogInterface.dismiss();
-
-                }
-            });
-            dialog.show();
-        } else {
-            return true;
-        }
-        return false;
-
-
-    }
 
 
     public void showProgressDialog() {
@@ -379,6 +337,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void deAnimateButtonWidth() {
+        dataBinding.flLogin.setEnabled(true);
         /// Toast.makeText(this, "Inside demate", Toast.LENGTH_SHORT).show();
         ValueAnimator anim = ValueAnimator.ofInt(getFabWidth(), loginButtonWidth);
         anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -406,16 +365,17 @@ public class LoginActivity extends AppCompatActivity {
 
     public void animateButtonWidth() {
 
+        dataBinding.flLogin.setEnabled(false);
         loginButtonWidth = dataBinding.flLogin.getMeasuredWidth();
         ValueAnimator anim = ValueAnimator.ofInt(loginButtonWidth, getFabWidth());
         anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
+               // System.out.println("Inside listener");
 
                 int val = (int) valueAnimator.getAnimatedValue();
                 ViewGroup.LayoutParams layoutParams = dataBinding.flLogin.getLayoutParams();
                 layoutParams.width = val;
-                //  System.out.println("width is "+layoutParams.width);
                 dataBinding.flLogin.requestLayout();
 
             }
@@ -515,4 +475,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
+    public void forgotPassword(View view) {
+        startActivity(new Intent(LoginActivity.this,ForgotPassword_Activity.class));
+        overridePendingTransition(R.anim.activity_in, R.anim.avtivity_out);
+
+
+    }
 }

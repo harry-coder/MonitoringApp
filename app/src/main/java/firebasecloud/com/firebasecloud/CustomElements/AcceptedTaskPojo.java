@@ -13,6 +13,16 @@ public class AcceptedTaskPojo {
     String incentive;
     String taskId;
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    String status;
+
     public String getEndDate() {
         return endDate;
     }

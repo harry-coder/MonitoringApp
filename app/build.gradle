@@ -7,7 +7,7 @@ android {
         applicationId "firebasecloud.com.firebasecloud"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 1
+        versionCode 2
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -43,13 +43,18 @@ dependencies {
     compile 'com.google.android.gms:play-services-maps:11.8.0'
     compile 'com.google.android.gms:play-services-location:11.8.0'
     compile 'com.google.android.gms:play-services-places:11.8.0'
+    compile 'com.github.PhilJay:MPAndroidChart:v2.2.4'
 
+    compile 'com.squareup.picasso:picasso:2.5.2'
 
     testCompile 'junit:junit:4.12'
     compile 'eu.the4thfloor.volley:com.android.volley:2015.05.28'
     compile 'io.paperdb:paperdb:2.1'
     implementation 'com.android.support:cardview-v7:26.1.0'
 }
+
+
+
 
 
 

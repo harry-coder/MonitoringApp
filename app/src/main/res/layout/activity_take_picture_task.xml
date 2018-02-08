@@ -8,56 +8,57 @@
         android:layout_height="match_parent"
         tools:context="firebasecloud.com.firebasecloud.TakePictureTask">
 
-        <android.support.design.widget.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/appbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-
-            android:background="?attr/colorPrimary">
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_scrollFlags="scroll|enterAlways|snap"
-                app:popupTheme="@style/AppTheme.AppBarOverlay" />
-        </android.support.design.widget.AppBarLayout>
 
         <RelativeLayout
             android:id="@+id/layoutTop"
             android:layout_width="match_parent"
             android:layout_height="230dp"
-            android:layout_below="@+id/appbar">
+            android:layout_alignParentTop="true">
 
 
             <android.support.v7.widget.CardView
                 android:id="@+id/image_holder"
-                android:layout_width="200dp"
+                android:layout_width="match_parent"
                 android:layout_height="230dp"
+
+                android:layout_centerHorizontal="true"
 
                 android:layout_marginBottom="5dp"
 
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="30dp"
-
-                app:cardElevation="10dp">
+                app:cardElevation="5dp">
 
                 <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_width="match_parent"
+                    android:layout_height="230dp"
+                    android:background="@color/colorPrimary">
 
                     <ImageView
                         android:id="@+id/im_image_upload"
-                        android:layout_width="wrap_content"
-                        android:layout_height="200dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="230dp"
 
                         android:layout_centerHorizontal="true"
 
-                        android:scaleType="fitXY"
+                        android:adjustViewBounds="true"
+                        android:layout_centerVertical="true"
 
-                        android:src="@drawable/green_camera_icon" />
+                        android:scaleType="centerCrop"
+
+                        />
+
+                    <ImageView
+                        android:id="@+id/tv_take_picture"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+
+                        android:layout_centerVertical="true"
+                        android:adjustViewBounds="true"
+
+                        android:background="?selectableItemBackgroundBorderless"
+
+                        android:padding="10dp"
+                        app:srcCompat="@drawable/camera_icon_white" />
 
 
                 </RelativeLayout>
@@ -67,20 +68,6 @@
         </RelativeLayout>
 
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/tv_take_picture"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="260dp"
-            android:adjustViewBounds="true"
-
-            app:backgroundTint="@color/colorUnreadText"
-            app:srcCompat="@drawable/upload_icon" />
-
         <TextView
             android:id="@+id/tv_instructions"
             android:layout_width="match_parent"
@@ -89,24 +76,57 @@
             android:layout_marginEnd="20dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="30dp"
+            android:fontFamily="@font/alegreya_sans_sc"
             android:gravity="center"
+
             android:padding="10dp"
             android:text="Please click on 'Upload Picture '  below to Upload an image" />
+
+        <ProgressBar
+            android:id="@+id/pb_showImageCount"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_instructions"
+            android:layout_centerHorizontal="true"
+            android:layout_marginEnd="20dp"
+
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp" />
+
+        <TextView
+            android:id="@+id/tv_imageCount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pb_showImageCount"
+
+
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/alegreya_sans_sc"
+            android:text="Total images to upload:"
+
+            />
+
 
         <android.support.v7.widget.CardView
             android:id="@+id/card1"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_alignParentBottom="true"
-
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
             app:cardElevation="8dp">
 
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+
+                >
 
                 <TextView
+
                     android:id="@+id/tv_upload_picture"
                     android:layout_width="match_parent"
 
@@ -120,7 +140,6 @@
                     android:textSize="20sp"
 
                     />
-
 
 
             </RelativeLayout>

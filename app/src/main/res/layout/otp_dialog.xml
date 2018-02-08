@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/alegreya_sans_sc"
+
+        android:text="Enter Otp"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/et_otp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView7"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="40dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="28dp"
+        android:textSize="15sp"
+        android:drawableEnd="@drawable/otp_icon"
+        android:drawableRight="@drawable/otp_icon"
+        android:ems="10"
+        android:hint="Enter otp"
+        android:inputType="number" />
+
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#c9c9c9"
+
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_below="@+id/textView7"
+
+        />
+
+
+    <TextView
+        android:id="@+id/tv_resend_otp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/et_otp"
+        android:layout_alignLeft="@+id/et_otp"
+        android:layout_below="@+id/et_otp"
+        android:visibility="invisible"
+        android:fontFamily="@font/alegreya_sans_sc"
+
+        android:layout_marginTop="20dp"
+        android:textSize="15sp"
+        android:text="Resend otp?" />
+    <TextView
+        android:id="@+id/tv_timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/et_otp"
+        android:textColor="#FF0000"
+        android:layout_alignRight="@+id/et_otp"
+        android:layout_below="@+id/et_otp"
+        android:fontFamily="@font/alegreya_sans_sc"
+
+        android:layout_marginTop="20dp"
+        android:textSize="15sp"
+        android:text="60" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#f1f1f1"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/tv_timer"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+
+            android:id="@+id/tv_cancel"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/alegreya_sans_sc"
+
+            android:textColor="#075e54"
+            android:layout_toStartOf="@+id/tv_submit"
+           android:textSize="17sp"
+            android:layout_marginEnd="60dp"
+
+
+
+            android:text="Cancel"
+            android:layout_toLeftOf="@+id/tv_submit"
+            android:layout_marginRight="40dp" />
+
+        <TextView
+            android:id="@+id/tv_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/tv_cancel"
+            android:textSize="17sp"
+            android:fontFamily="@font/alegreya_sans_sc"
+
+            android:textColor="#075e54"
+            android:layout_marginRight="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_alignParentEnd="true"
+
+
+            android:text="Submit"
+            android:layout_alignParentRight="true" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

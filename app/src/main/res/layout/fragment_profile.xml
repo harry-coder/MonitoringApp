@@ -1,13 +1,135 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="firebasecloud.com.firebasecloud.BottomNavigationFragements.Profile">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
+        android:id="@+id/relative"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="220dp"
+        android:background="@color/colorPrimaryDark">
 
-</FrameLayout>
+        <android.support.v7.widget.CardView
+            android:id="@+id/im_card"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_centerHorizontal="true"
+
+            android:layout_centerVertical="true"
+            android:elevation="12dp"
+            android:innerRadius="0dp"
+            android:shape="ring"
+            android:thicknessRatio="1.9"
+            app:cardCornerRadius="60dp">
+        <RelativeLayout
+            android:layout_width="120dp"
+            android:layout_height="120dp">
+
+            <ImageView
+                android:id="@+id/im_userImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:adjustViewBounds="true"
+
+                android:scaleType="fitXY"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/okhlee_logo">
+
+
+            </ImageView>
+        </RelativeLayout>
+         </android.support.v7.widget.CardView>
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_below="@+id/im_card"
+            android:layout_centerHorizontal="true"
+
+            android:fontFamily="@font/alegreya_sans_sc"
+            android:text="Harpreet singh"
+            android:textColor="#fff"
+            android:textSize="15sp"
+            android:textStyle="bold"
+
+
+            />
+
+        <TextView
+            android:id="@+id/tv_taskPercent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_below="@+id/tv_name"
+            android:layout_centerHorizontal="true"
+            android:text="Good you have completed 20% tesk this month"
+            android:fontFamily="@font/alegreya_sans_sc"
+
+            android:textColor="#fff" />
+
+        <ImageView
+            android:id="@+id/im_userDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/im_chartDetails"
+
+
+            android:layout_alignTop="@+id/textView7"
+            app:srcCompat="@drawable/details_icon" />
+        <ImageView
+            android:id="@+id/im_chartDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            app:srcCompat="@drawable/pie_icon"
+
+            android:visibility="invisible"
+            android:layout_marginTop="15dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/alegreya_sans_sc"
+
+            android:text="Profile"
+            android:textSize="22sp"
+            android:textColor="#fff"
+
+            android:layout_marginTop="8dp"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/textView7" />
+    </RelativeLayout>
+
+    <ViewFlipper
+        android:id="@+id/flipper"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/relative"
+        android:layout_marginTop="5dp"
+        android:layout_height="wrap_content">
+
+        <include
+            layout="@layout/graph_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+
+
+        </include>
+        <include
+            layout="@layout/user_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+
+
+        </include>
+    </ViewFlipper>
+</RelativeLayout>

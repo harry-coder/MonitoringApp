@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fillViewport="true">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_userName"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/user_icon"
+
+            android:drawablePadding="15dp"
+            android:fontFamily="@font/alegreya_sans_sc"
+            android:padding="10dp"
+            android:text="Harpreet  singh" />
+
+        <View
+            android:id="@+id/view1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/tv_userName"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:background="#d3d3d3" />
+
+        <TextView
+            android:id="@+id/tv_mobile"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/view1"
+            android:drawableLeft="@drawable/mobile_icon"
+
+            android:drawablePadding="15dp"
+            android:fontFamily="@font/alegreya_sans_sc"
+            android:padding="10dp"
+            android:text="8447937397" />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/tv_mobile"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:background="#d3d3d3" />
+
+        <TextView
+            android:id="@+id/tv_city"
+
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/view2"
+            android:drawableLeft="@drawable/city_icon"
+
+            android:drawablePadding="15dp"
+            android:fontFamily="@font/alegreya_sans_sc"
+            android:padding="10dp"
+            android:text="Delhi" />
+
+        <View
+            android:id="@+id/view3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/tv_city"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:background="#d3d3d3" />
+
+        <TextView
+            android:id="@+id/tv_userType"
+
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/view3"
+            android:drawableLeft="@drawable/type_icon"
+
+            android:drawablePadding="15dp"
+            android:fontFamily="@font/alegreya_sans_sc"
+            android:padding="10dp"
+            android:text="Printer" />
+
+        <View
+            android:id="@+id/view4"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/tv_userType"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:background="#d3d3d3" />
+
+        <TextView
+            android:id="@+id/tv_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_below="@+id/view4"
+            android:drawableLeft="@drawable/info_icon"
+            android:drawablePadding="10dp"
+            android:fontFamily="@font/alegreya_sans_sc"
+            android:padding="10dp"
+            android:text="To change any of the above setting contact OKHLEE"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="12dp" />
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_info"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_availability"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginStart="10dp"
+                    android:padding="10dp"
+                    android:text="Change Availability Status"
+                    android:textColor="#313641" />
+
+                <Switch
+
+                    android:id="@+id/st_changeStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_availability"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/alegreya_sans_sc"
+                    android:padding="10dp"
+                    android:checked="true"
+
+                    android:text="Turn off/On this setting to manage your availability. When you turn off this setting you will not receive any notification from OKHLEE"
+                    android:textColor="#696969"
+
+                    android:textSize="15sp" />
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/im_card"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:layout_centerVertical="true"
+            android:elevation="12dp"
+            android:innerRadius="0dp"
+            android:shape="ring"
+            android:layout_marginBottom="20dp"
+            android:layout_below="@+id/cardView"
+            android:thicknessRatio="1.9"
+            app:cardCornerRadius="30dp"
+            tools:targetApi="lollipop">
+            <RelativeLayout
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+
+                >
+
+                <ImageView
+                    android:id="@+id/im_logout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:layout_alignParentStart="true"
+
+                    android:layout_alignParentTop="true"
+
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="13dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@drawable/move_icon"
+
+                    >
+
+
+                </ImageView>
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+
+    </RelativeLayout>
+</ScrollView>

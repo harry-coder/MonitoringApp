@@ -2,14 +2,15 @@
 <resources>
     <color name="colorPrimary">#075e54</color>
     <color name="colorPrimaryDark">#054d44</color>
-    <color name="colorAccent">#7c879f</color>
+    <color name="colorAccent">#054d44</color>
 
     <color name="colorPrimaryText">#202020</color>
     <color name="colorSecondaryText">#737373</color>
     <color name="colorDisabledText">#83afaa</color>
     <color name="colorDivider">#dddddd</color>
     <color name="colorUnreadText">#09d261</color>
-
+    <color name="expiredColor">#F1C40F</color>
+    <color name="rejectedColor">#FF4500</color>
     <color name="bgColor">#7c879f</color>
 
     <color name="footerBg">#dedede</color>
