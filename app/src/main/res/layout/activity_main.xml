@@ -10,8 +10,10 @@
       <RelativeLayout
           android:layout_width="match_parent"
           android:layout_height="match_parent">
-      <!---your recycler view Container Layout-->
-      <FrameLayout
+
+
+
+         <FrameLayout
           android:id="@+id/frame"
 
           android:layout_width="match_parent"
@@ -22,7 +24,7 @@
 
 
 
-      </FrameLayout>
+         </FrameLayout>
 
       <android.support.design.widget.BottomNavigationView
           android:id="@+id/bottom_nav"
@@ -34,6 +36,18 @@
           app:itemBackground="@android:color/white"
 
           app:menu="@menu/main" />
+
+
+         <android.support.design.widget.FloatingActionButton
+             android:id="@+id/fl_openCam"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+
+             android:layout_above="@+id/bottom_nav"
+             android:layout_alignParentEnd="true"
+             android:layout_marginBottom="20dp"
+             android:layout_marginEnd="20dp"
+             app:srcCompat="@drawable/camera_icon_white" />
 
       </RelativeLayout>
 

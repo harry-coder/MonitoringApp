@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.ViewFlipper;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -57,6 +58,7 @@ public class RejectedTasks extends Fragment {
     public String taskId;
     UserRejectedTaskListAdapter adapter;
     RecyclerView userRejectedTaskRecycleView;
+    ViewFlipper flipper;
 
 
     public RejectedTasks() {
@@ -95,6 +97,7 @@ public class RejectedTasks extends Fragment {
         adapter = new UserRejectedTaskListAdapter(getActivity());
         userRejectedTaskRecycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        flipper=view.findViewById(R.id.flipper);
         userRejectedTaskRecycleView.setAdapter(adapter);
 
       //  getRejectedTaskListForUser(getActivity());
@@ -157,6 +160,7 @@ public class RejectedTasks extends Fragment {
                                             @Override
                                             public void run() {
                                                 progressDialog.dismiss();
+                                                flipper.showNext();
                                            //     Alert.showAlertDialog("No Rejected task", context);
 
                                             }

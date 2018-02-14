@@ -34,7 +34,7 @@
 
                 android:adjustViewBounds="true"
 
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:src="@drawable/okhlee_logo">

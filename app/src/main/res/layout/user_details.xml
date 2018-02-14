@@ -16,7 +16,7 @@
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/user_icon"
+            android:drawableStart="@drawable/user_icon"
 
             android:drawablePadding="15dp"
             android:fontFamily="@font/alegreya_sans_sc"
@@ -119,7 +119,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_info"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="5dp"
             android:layout_marginTop="20dp">
 
             <RelativeLayout
@@ -130,9 +130,10 @@
                     android:id="@+id/tv_availability"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
+                    android:fontFamily="@font/alegreya_sans_sc"
                     android:layout_marginStart="10dp"
                     android:padding="10dp"
+                    android:textSize="18sp"
                     android:text="Change Availability Status"
                     android:textColor="#313641" />
 
@@ -156,46 +157,111 @@
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
-            android:id="@+id/im_card"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_centerHorizontal="true"
+            android:id="@+id/cv_adhaarUpload"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
 
-            android:backgroundTint="@color/colorPrimaryDark"
-            android:layout_centerVertical="true"
+
+
             android:elevation="12dp"
-            android:innerRadius="0dp"
-            android:shape="ring"
+
             android:layout_marginBottom="20dp"
             android:layout_below="@+id/cardView"
-            android:thicknessRatio="1.9"
-            app:cardCornerRadius="30dp"
-            tools:targetApi="lollipop">
+            >
             <RelativeLayout
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
 
                 >
 
-                <ImageView
-                    android:id="@+id/im_logout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                <TextView
+                    android:id="@+id/tv_uploadAadhar"
+                    android:layout_width="250dp"
+                    android:layout_height="match_parent"
 
                     android:layout_alignParentStart="true"
 
-                    android:layout_alignParentTop="true"
+                    android:text="Upload Aadhar"
 
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="13dp"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitXY"
-                    app:srcCompat="@drawable/move_icon"
+                    android:textSize="20sp"
+
+                    android:paddingEnd="10dp"
+
+
+                    android:fontFamily="@font/alegreya_sans_sc"
+                    android:gravity="end|center"
+
+                    android:layout_marginStart="20dp"
+
+                    android:drawableStart="@drawable/upload_green_icon"
+
+
+
 
                     >
 
 
-                </ImageView>
+                </TextView>
+                <TextView
+                    android:id="@+id/tv_showAadhar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/next_icon"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="10dp"
+                    android:visibility="gone"
+                    android:layout_centerVertical="true"
+                    />
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/im_card"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+
+
+
+            android:elevation="12dp"
+
+            android:layout_marginBottom="20dp"
+            android:layout_below="@+id/cv_adhaarUpload"
+         >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                >
+
+                <TextView
+                    android:id="@+id/im_logout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:layout_alignParentStart="true"
+
+                    android:text="Logout"
+                    android:textColor="@color/rejectedColor"
+                    android:textSize="20sp"
+
+
+                    android:fontFamily="@font/alegreya_sans_sc"
+                    android:gravity="center"
+                    android:paddingEnd="30dp"
+                    android:layout_marginStart="20dp"
+
+                    android:drawableStart="@drawable/move_red_icon"
+
+
+
+
+                    >
+
+
+                </TextView>
             </RelativeLayout>
         </android.support.v7.widget.CardView>
 

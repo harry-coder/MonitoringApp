@@ -71,7 +71,7 @@ public class Signup_Activity extends AppCompatActivity {
     ArrayList<String> localityKey;
     public static String selectedCity;
 
-    TextView tv_selectLocality;
+
 
 
     @Override
@@ -88,7 +88,6 @@ public class Signup_Activity extends AppCompatActivity {
         citiesMap = new HashMap<>();
         localityKey = new ArrayList<>();
 
-        tv_selectLocality=findViewById(R.id.tv_selectLocality);
 
         binding.btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,7 +95,11 @@ public class Signup_Activity extends AppCompatActivity {
 
                 if (checkInternetConnection()) {
                     if (autheticateDetails()) {
-                        signupWithCredentials(mobile, password, userName);
+                        try {
+                            signupWithCredentials(mobile, password, userName);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
                     }
                 } else LoginActivity.netConnectivityDialog(Signup_Activity.this);
@@ -119,21 +122,22 @@ public class Signup_Activity extends AppCompatActivity {
 
         setItemsForUserTypeSpinner(R.array.user_type);
 
-        tv_selectLocality.setOnClickListener(new View.OnClickListener() {
+       /* binding.tvSelectLocality.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(binding.spCity.getSelectedItem()!=null)
-                {
-                    startActivity(new Intent(Signup_Activity.this, SearchLocality.class));
 
-                }
-                else
-                {
-                    Toast.makeText(Signup_Activity.this, "Please select city first", Toast.LENGTH_SHORT).show();
+                String selectedItem=binding.spCity.getSelectedItem().toString();
+                if(!selectedItem.equalsIgnoreCase("select city")) {
+                    if (binding.spCity.getSelectedItem() != null) {
+                        startActivity(new Intent(Signup_Activity.this, SearchLocality.class));
+
+                    } else {
+                        Toast.makeText(Signup_Activity.this, "Please select city first", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
-
+*/
     }
 
     public boolean autheticateDetails() {
@@ -189,26 +193,46 @@ public class Signup_Activity extends AppCompatActivity {
     }
 
 
-    public void signupWithCredentials(final String mobile, final String password, final String name) {
+    public void signupWithCredentials(final String mobile, final String password, final String name) throws JSONException {
 
         final String token = Paper.book().read("token");
 
         final String signupUrl = "http://www.admin-panel.adecity.com/api/register";
 
 
+        JSONArray clusterLocalityArray=new JSONArray();
+
+        //this could crash because lenght could be different...
+
+        for (int i=0;i<SearchLocality.clusterLocalityNames.length;i++)
+        {
+            ArrayList<String> list=SearchLocality.clusterLocalityNames[i];
+            JSONObject obj=new JSONObject();
+            JSONArray array=new JSONArray();
+            for(int j=0;j<list.size();j++)
+            {
+                array.put(list.get(j));
+            }
+            obj.put("names",array);
+            obj.put("group_name",SearchLocality.globalClusterNames.get(i).getClusterName());
+            clusterLocalityArray.put(obj);
+        }
+
+
+        final JSONArray array = new JSONArray();
 
 
       ArrayList<Localities> list=SearchLocality.selectedLocalities;
 
-        final JSONArray array = new JSONArray();
 
-       // String[] ar = new String[list.size()];
 
-        for(int i=0;i<list.size();i++)
-        {
-            array.put(list.get(i).getLocalityName());
-        }
 
+      if(!list.isEmpty()) {
+
+          for (int i = 0; i < list.size(); i++) {
+              array.put(list.get(i).getLocalityName());
+          }
+      }
 
 
         new Handler().post(new Runnable() {
@@ -226,6 +250,7 @@ public class Signup_Activity extends AppCompatActivity {
                 params.put("registrationId", token);
 
                 params.put("user_city", city);
+                //this need to be changed..
                 params.put("user_locality", array);
 
 

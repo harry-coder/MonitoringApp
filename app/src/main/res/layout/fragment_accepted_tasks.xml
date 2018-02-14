@@ -3,11 +3,37 @@
     android:layout_height="match_parent"
     >
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_userAcceptedTaskRecycleView"
+
+    <ViewFlipper
+        android:id="@+id/flipper"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_userAcceptedTaskRecycleView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    </android.support.v7.widget.RecyclerView>
+
+        </android.support.v7.widget.RecyclerView>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="No task found"
+                android:textColor="#d3d3d3"
+                android:textSize="25sp"
+
+
+                />
+        </RelativeLayout>
+    </ViewFlipper>
+
+
 </RelativeLayout>

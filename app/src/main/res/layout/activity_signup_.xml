@@ -1,4 +1,5 @@
 <layout>
+
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
 
@@ -144,14 +145,15 @@
                     android:layout_alignLeft="@+id/textpassword"
                     android:layout_alignRight="@+id/textpassword"
                     android:layout_alignStart="@+id/textpassword"
+                    android:layout_below="@+id/tv_empty_city_warning"
+                    android:layout_marginTop="30dp"
+
                     android:background="@drawable/spinner_background"
                     android:fontFamily="@font/alegreya_sans_sc"
 
-                    android:layout_below="@+id/confirmpasswordwrapper"
-                    android:layout_marginTop="30dp"
-
 
                     android:spinnerMode="dialog" />
+
                 <TextView
                     android:id="@+id/tv_empty_warning"
                     android:layout_width="match_parent"
@@ -160,28 +162,29 @@
                     android:layout_alignStart="@+id/sp_city"
                     android:layout_below="@+id/sp_city"
                     android:layout_marginTop="5dp"
-                    android:visibility="gone"
                     android:fontFamily="@font/alegreya_sans_sc"
-
                     android:text="Please select City"
 
+                    android:textSize="12sp"
 
-                    android:textSize="12sp" />
-                <TextView
+
+                    android:visibility="gone" />
+
+                <!--<TextView
                     android:id="@+id/tv_selectLocality"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                   android:layout_below="@+id/sp_city"
-                    android:layout_marginTop="10dp"
-                    android:visibility="visible"
                     android:layout_alignEnd="@+id/sp_city"
+                    android:layout_below="@+id/sp_city"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/alegreya_sans_sc"
 
                     android:text="Select Locality"
 
-                    android:fontFamily="@font/alegreya_sans_sc"
+                    android:textSize="15sp"
 
-                    android:textSize="15sp" />
-
+                    android:visibility="visible" />
+-->
 
                 <Spinner
                     android:id="@+id/sp_user_type"
@@ -191,12 +194,12 @@
                     android:layout_alignLeft="@+id/textpassword"
                     android:layout_alignRight="@+id/textpassword"
                     android:layout_alignStart="@+id/textpassword"
-                    android:fontFamily="@font/alegreya_sans_sc"
+                    android:layout_below="@+id/confirmpasswordwrapper"
 
-                    android:layout_below="@+id/tv_selectLocality"
                     android:layout_marginTop="30dp"
-
                     android:background="@drawable/spinner_background"
+
+                    android:fontFamily="@font/alegreya_sans_sc"
 
                     android:spinnerMode="dialog" />
 
@@ -208,31 +211,32 @@
                     android:layout_alignStart="@+id/sp_user_type"
                     android:layout_below="@+id/sp_user_type"
                     android:layout_marginTop="5dp"
-                    android:visibility="gone"
                     android:fontFamily="@font/alegreya_sans_sc"
-
                     android:text="Please select User Type"
 
+                    android:textSize="12sp"
 
-                    android:textSize="12sp" />
+
+                    android:visibility="gone" />
+
                 <Button
                     android:id="@+id/btnSignIn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
-                    android:fontFamily="@font/alegreya_sans_sc"
-
                     android:layout_alignEnd="@+id/confirmpasswordwrapper"
+
                     android:layout_alignLeft="@+id/confirmpasswordwrapper"
                     android:layout_alignRight="@+id/confirmpasswordwrapper"
                     android:layout_alignStart="@+id/confirmpasswordwrapper"
-                    android:layout_below="@+id/sp_user_type"
+                    android:layout_below="@+id/sp_city"
                     android:layout_marginBottom="10dp"
-
                     android:layout_marginTop="38dp"
 
-
                     android:background="@drawable/button_background"
+
+
+                    android:fontFamily="@font/alegreya_sans_sc"
                     android:text="@string/sign_up"
                     android:textColor="@android:color/white"
                     android:textSize="18sp" />
@@ -245,8 +249,8 @@
 
                     android:layout_below="@+id/btnSignIn"
                     android:layout_marginTop="10dp"
-                    app:cardElevation="10dp"
                     app:cardCornerRadius="5dp"
+                    app:cardElevation="10dp"
                     app:cardMaxElevation="10dp">
 
 

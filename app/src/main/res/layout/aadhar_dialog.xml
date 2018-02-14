@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/relative2"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_shape"
+
+    >
+
+    <ImageView
+        android:id="@+id/im_aadharImage"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+
+        android:layout_alignParentStart="true"
+
+        android:scaleType="centerCrop" />
+
+    <TableRow
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/im_aadharImage"
+
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="20dp"
+
+        >
+
+        <ImageView
+            android:id="@+id/im_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/alegreya_sans_sc"
+
+            app:srcCompat="@drawable/cross_blue_icon"
+
+
+
+             />
+
+
+    </TableRow>
+
+
+</RelativeLayout>

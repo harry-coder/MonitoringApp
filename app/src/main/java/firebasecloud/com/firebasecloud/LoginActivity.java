@@ -62,6 +62,7 @@ public class LoginActivity extends AppCompatActivity {
     private String mobileNumber, userpassword;
     private Handler handler;
     public static String userId = "";
+    public static String userType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,7 +163,6 @@ public class LoginActivity extends AppCompatActivity {
                                 public void onResponse(JSONObject response) {
 
 
-                                    System.out.println(response);
                                     try {
                                         boolean success = response.getBoolean("success");
 
@@ -173,10 +173,15 @@ public class LoginActivity extends AppCompatActivity {
                                             //deleting the user logout out status because he is loging in now
                                             Paper.book().delete("isUserLoggedOut");
                                             userId = response.getString("userid");
+                                            userType=response.getString("user_type");
+                                            System.out.println("This is user type "+userType);
+
+
 
                                             if(userId!=null)
                                             {
                                                 Paper.book().write("userId",userId);
+                                                Paper.book().write("userType",userType);
                                             }
 
                                             nextAction();

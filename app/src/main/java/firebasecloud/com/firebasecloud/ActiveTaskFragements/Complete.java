@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -54,6 +55,7 @@ public class Complete extends Fragment {
     CompleteTaskAdapter adapter;
     public ArrayList<CompleteTaskPojo> globalCompleteTaskList;
 
+    ViewFlipper flipper;
     Handler handler;
     RequestQueue queue;
 
@@ -96,11 +98,19 @@ public class Complete extends Fragment {
         rv_completeTaskRecycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
         rv_completeTaskRecycleView.setAdapter(adapter);
 
-        getCompleteTaskListForUser(getActivity());
+        flipper = view.findViewById(R.id.flipper);
+
 
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getCompleteTaskListForUser(getActivity());
+
+
+    }
 
     public void getCompleteTaskListForUser(final Context context) {
 
@@ -150,8 +160,7 @@ public class Complete extends Fragment {
                                             @Override
                                             public void run() {
                                                 progressDialog.dismiss();
-                                        //        Alert.showAlertDialog("No completed task", context);
-
+                                                flipper.showNext();
                                             }
                                         });
 
@@ -247,8 +256,8 @@ public class Complete extends Fragment {
             holder.tv_incentive.setText("₹" + itemList.getIncentive() + "/-");
             holder.tv_description.setText(itemList.getTitle());
             try {
-                holder.tv_startDate.setText("Start: " + getDate(itemList.getStartDate(),false));
-                holder.tv_endDate.setText("End: " + getDate(itemList.getEndDate(),false));
+                holder.tv_startDate.setText("Start: " + getDate(itemList.getStartDate(), false));
+                holder.tv_endDate.setText("End: " + getDate(itemList.getEndDate(), false));
             } catch (ParseException e) {
                 e.printStackTrace();
             }

@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.ViewFlipper;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -52,6 +53,8 @@ public class AcceptedTasks extends Fragment {
     public String taskId;
     UserAcceptedTaskListAdapter adapter;
     RecyclerView userAccptedTaskRecycleView;
+
+    ViewFlipper flipper;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -94,6 +97,8 @@ public class AcceptedTasks extends Fragment {
         userAccptedTaskRecycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         userAccptedTaskRecycleView.setAdapter(adapter);
+
+        flipper=view.findViewById(R.id.flipper);
 
       //  getAccptedTaskListForUser(getActivity());
         return view;
@@ -156,8 +161,8 @@ public class AcceptedTasks extends Fragment {
                                             @Override
                                             public void run() {
                                                 progressDialog.dismiss();
-                                               // Alert.showAlertDialog("No task Found!", context);
 
+                                                flipper.showNext();
                                             }
                                         });
 

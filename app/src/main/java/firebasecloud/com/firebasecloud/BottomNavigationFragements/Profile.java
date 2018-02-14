@@ -4,18 +4,21 @@ package firebasecloud.com.firebasecloud.BottomNavigationFragements;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -27,6 +30,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.CompoundButton;
@@ -70,8 +74,10 @@ import java.util.Map;
 
 import firebasecloud.com.firebasecloud.ActiveTaskFragements.OnGoing;
 import firebasecloud.com.firebasecloud.Alert;
+import firebasecloud.com.firebasecloud.CustomElements.VollyErrors;
 import firebasecloud.com.firebasecloud.IntroActivity;
 import firebasecloud.com.firebasecloud.LoginActivity;
+import firebasecloud.com.firebasecloud.MainActivity;
 import firebasecloud.com.firebasecloud.R;
 import firebasecloud.com.firebasecloud.TakePictureTask;
 import firebasecloud.com.firebasecloud.TaskFragments.NewTasks;
@@ -89,14 +95,19 @@ public class Profile extends Fragment {
     PieChart pieChart;
     ProgressDialog dialog;
     ArrayList<Integer> pieChartDataList;
-    TextView tv_userName, tv_userCity, tv_userMobile, tv_userType, tv_complete, tv_snoozed, tv_ended, tv_name, tv_taskPercent;
+    TextView tv_userName, tv_userCity, tv_userMobile, tv_userType, tv_complete, tv_snoozed, tv_ended, tv_name, tv_taskPercent, tv_aadharUpload, tv_showAadhar;
+
+    boolean isAadharUploadingAction;
+
+    Dialog showAadharDialog;
 
     Switch st_userAvailability;
 
     Bitmap userImage;
     HashMap<String, Integer> valueMap;
     String userChoosenTask;
-    ImageView im_userImage,im_logout;
+    ImageView im_userImage;
+    TextView im_logout;
     int completeCount, endedCount, pendingCount;
     String status;
     // TODO: Rename and change types of parameters
@@ -127,7 +138,7 @@ public class Profile extends Fragment {
         queue = vollySingleton.getInstance().getRequestQueue();
         pieChartDataList = new ArrayList<>();
         dialog = new ProgressDialog(getActivity());
-        valueMap = new HashMap();
+        valueMap = new HashMap<>();
     }
 
     @Override
@@ -144,7 +155,7 @@ public class Profile extends Fragment {
         tv_name = view.findViewById(R.id.tv_name);
         im_userDetails = view.findViewById(R.id.im_userDetails);
         im_pieDetails = view.findViewById(R.id.im_chartDetails);
-        im_logout=view.findViewById(R.id.im_logout);
+        im_logout = view.findViewById(R.id.im_logout);
 
         flipper = view.findViewById(R.id.flipper);
 
@@ -155,17 +166,28 @@ public class Profile extends Fragment {
         tv_snoozed = view.findViewById(R.id.tv_snoozed);
         tv_ended = view.findViewById(R.id.tv_ended);
         st_userAvailability = view.findViewById(R.id.st_changeStatus);
+        tv_aadharUpload = view.findViewById(R.id.tv_uploadAadhar);
+        tv_showAadhar = view.findViewById(R.id.tv_showAadhar);
+
+        tv_aadharUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                isAadharUploadingAction = true;
+                selectImage(getActivity());
+
+            }
+        });
+
 
         st_userAvailability.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 if (isChecked) {
-                    System.out.println("Inside true");
                     changeUserAvailabilityStatus("Available", getActivity());
 
                 } else {
-                    System.out.println("Inside false");
                     changeUserAvailabilityStatus("Unavailable", getActivity());
 
                 }
@@ -173,8 +195,6 @@ public class Profile extends Fragment {
         });
 
         getPieChartDetails(getActivity());
-
-
         getUserDetails(getActivity());
 
 
@@ -198,11 +218,6 @@ public class Profile extends Fragment {
         im_pieDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-/*
-                Animation out = AnimationUtils.loadAnimation(getActivity(),android.R.anim.slide_in_left); // load an animation
-                flipper.setOutAnimation(out); // set out Animation for ViewSwitcher
-
-*/
                 im_userDetails.setVisibility(View.VISIBLE);
 
                 im_pieDetails.setVisibility(View.INVISIBLE);
@@ -226,7 +241,7 @@ public class Profile extends Fragment {
 
         if (Paper.book().exist("imageUrl")) {
             String url = Paper.book().read("imageUrl");
-            setImageUsingPicasso(getActivity(), url);
+            setImageUsingPicasso(getActivity(), url, im_userImage);
         }
 
         im_logout.setOnClickListener(new View.OnClickListener() {
@@ -236,7 +251,56 @@ public class Profile extends Fragment {
             }
         });
 
+        if (Paper.book().exist("aadharUrl")) {
+
+            final String url=Paper.book().read("aadharUrl");
+            tv_aadharUpload.setText("Aadhar uploaded");
+            tv_aadharUpload.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+            tv_showAadhar.setVisibility(View.VISIBLE);
+            tv_showAadhar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showDialog(getActivity(),url);
+
+                }
+            });
+
+        }
+
         return view;
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Toast.makeText(, "", Toast.LENGTH_SHORT).show();
+    }
+
+    public void showDialog(Activity activity, String url) {
+        showAadharDialog = new Dialog(activity);
+        showAadharDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        showAadharDialog.setCancelable(false);
+        showAadharDialog.setContentView(R.layout.aadhar_dialog);
+
+        showAadharDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        ImageView im_closeDialog = showAadharDialog.findViewById(R.id.im_cancel);
+        ImageView im_showAadharImage = showAadharDialog.findViewById(R.id.im_aadharImage);
+
+        Picasso.with(getActivity()).load(url).into(im_showAadharImage);
+
+
+        im_closeDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAadharDialog.dismiss();
+            }
+        });
+
+        showAadharDialog.show();
+
     }
 
     private void changeUserAvailabilityStatus(final String status, final Context context) {
@@ -285,39 +349,10 @@ public class Profile extends Fragment {
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        NetworkResponse networkResponse = error.networkResponse;
-                        String errorMessage = "Unknown error";
-                        if (networkResponse == null) {
-                            if (error.getClass().equals(TimeoutError.class)) {
-                                errorMessage = "Request timeout";
-                            } else if (error.getClass().equals(NoConnectionError.class)) {
-                                errorMessage = "Failed to connect server";
-                            }
-                        } else {
-                            String result = new String(networkResponse.data);
-                            try {
-                                JSONObject response = new JSONObject(result);
-                                String status = response.getString("status");
-                                String message = response.getString("message");
-
-                                Log.e("Error Status", status);
-                                Log.e("Error Message", message);
-
-                                if (networkResponse.statusCode == 404) {
-                                    errorMessage = "Resource not found";
-                                } else if (networkResponse.statusCode == 401) {
-                                    errorMessage = message + " Please login again";
-                                } else if (networkResponse.statusCode == 400) {
-                                    errorMessage = message + " Check your inputs";
-                                } else if (networkResponse.statusCode == 500) {
-                                    errorMessage = message + " Something is getting wrong";
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
+                        String message = VollyErrors.getInstance().showVollyError(error);
+                        dialog.dismiss();
+                        Alert.showAlertDialog(message, context);
                         error.printStackTrace();
-                        Alert.showAlertDialog(errorMessage, context);
                     }
                 });
 
@@ -390,7 +425,18 @@ public class Profile extends Fragment {
                 e.printStackTrace();
             }
         }
-        sendUserImage(getActivity());
+        if (isAadharUploadingAction) {
+            final String serverUrl = "http://www.admin-panel.adecity.com/task/save-user-images";
+
+            sendUserImage(getActivity(), serverUrl);
+
+        } else {
+            final String serverUrl = "http://www.admin-panel.adecity.com/api/upload-profile-image";
+
+            sendUserImage(getActivity(), serverUrl);
+
+        }
+
         //    transformedBitmap=getRoundedCroppedBitmap(userImage);
         //  im_userImage.setImageBitmap(transformedBitmap);
 
@@ -419,7 +465,17 @@ public class Profile extends Fragment {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        sendUserImage(getActivity());
+        if (isAadharUploadingAction) {
+            final String serverUrl = "http://www.admin-panel.adecity.com/task/save-user-images";
+
+            sendUserImage(getActivity(), serverUrl);
+
+        } else {
+            final String serverUrl = "http://www.admin-panel.adecity.com/api/upload-profile-image";
+
+            sendUserImage(getActivity(), serverUrl);
+
+        }
 
         // transformedBitmap=getRoundedCroppedBitmap(userImage);
 
@@ -429,12 +485,11 @@ public class Profile extends Fragment {
     }
 
 
-    public void sendUserImage(final Context context) {
+    public void sendUserImage(final Context context, String url) {
         dialog.setMessage("Uploading Image");
         dialog.show();
-        final String serverUrl = "http://www.admin-panel.adecity.com/api/upload-profile-image";
 
-        VolleyMultipartRequest multipartRequest = new VolleyMultipartRequest(Request.Method.POST, serverUrl, new Response.Listener<NetworkResponse>() {
+        VolleyMultipartRequest multipartRequest = new VolleyMultipartRequest(Request.Method.POST, url, new Response.Listener<NetworkResponse>() {
             @Override
             public void onResponse(NetworkResponse response) {
 
@@ -449,8 +504,17 @@ public class Profile extends Fragment {
                         dialog.dismiss();
 
                         String url = result.getString("url");
-                        Paper.book().write("imageUrl", url);
-                        setImageUsingPicasso(context, url);
+
+
+                        if (isAadharUploadingAction) {
+
+                            Paper.book().write("aadharUrl", url);
+                            isAadharUploadingAction = false;
+                        } else {
+                            Paper.book().write("imageUrl", url);
+                            setImageUsingPicasso(context, url, im_userImage);
+
+                        }
                     } else {
                         String message = result.getString("msg");
 
@@ -468,40 +532,12 @@ public class Profile extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                NetworkResponse networkResponse = error.networkResponse;
-                String errorMessage = "Unknown error";
-                if (networkResponse == null) {
-                    if (error.getClass().equals(TimeoutError.class)) {
-                        errorMessage = "Request timeout";
-                    } else if (error.getClass().equals(NoConnectionError.class)) {
-                        errorMessage = "Failed to connect server";
-                    }
-                    dialog.dismiss();
-                } else {
-                    String result = new String(networkResponse.data);
-                    try {
-                        JSONObject response = new JSONObject(result);
-                        String status = response.getString("status");
-                        String message = response.getString("message");
 
-                        Log.e("Error Status", status);
-                        Log.e("Error Message", message);
+                String message = VollyErrors.getInstance().showVollyError(error);
 
-                        if (networkResponse.statusCode == 404) {
-                            errorMessage = "Resource not found";
-                        } else if (networkResponse.statusCode == 401) {
-                            errorMessage = message + " Please login again";
-                        } else if (networkResponse.statusCode == 400) {
-                            errorMessage = message + " Check your inputs";
-                        } else if (networkResponse.statusCode == 500) {
-                            errorMessage = message + " Something is getting wrong";
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    dialog.dismiss();
-                }
-                Alert.showAlertDialog(errorMessage, context);
+
+                dialog.dismiss();
+                Alert.showAlertDialog(message, context);
                 error.printStackTrace();
             }
         }) {
@@ -510,6 +546,7 @@ public class Profile extends Fragment {
                 Map<String, String> objectToSend = new HashMap<>();
 
                 objectToSend.put("user_id", NewTasks.userId);
+                objectToSend.put("type", "kyc");
 
 
                 return objectToSend;
@@ -815,17 +852,17 @@ public class Profile extends Fragment {
         //}
     }
 
-    public void setImageUsingPicasso(Context context, String url) {
+    public void setImageUsingPicasso(Context context, String url, final ImageView imageHolder) {
         Picasso.with(context).load(url)
                 .resize(120, 120)
                 .into(im_userImage, new Callback() {
                     @Override
                     public void onSuccess() {
-                        Bitmap imageBitmap = ((BitmapDrawable) im_userImage.getDrawable()).getBitmap();
+                        Bitmap imageBitmap = ((BitmapDrawable) imageHolder.getDrawable()).getBitmap();
                         RoundedBitmapDrawable imageDrawable = RoundedBitmapDrawableFactory.create(getResources(), imageBitmap);
                         imageDrawable.setCircular(true);
                         imageDrawable.setCornerRadius(Math.max(imageBitmap.getWidth(), imageBitmap.getHeight()) / 2.0f);
-                        im_userImage.setImageDrawable(imageDrawable);
+                        imageHolder.setImageDrawable(imageDrawable);
                     }
 
                     @Override

@@ -535,7 +535,7 @@ public class TakePictureTask extends AppCompatActivity implements ActivityCompat
     }
 
 
-    private static File getOutputMediaFile() {
+    public static File getOutputMediaFile() {
         File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES), "Okhlee monitor");
 

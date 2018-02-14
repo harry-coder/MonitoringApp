@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
@@ -72,7 +73,9 @@ public class NewTasks extends Fragment {
 
     ViewFlipper flipper;
     public static String userId;
-   static  String exactime[];
+    FloatingActionButton fl_cam;
+    static String exactime[];
+
     public NewTasks() {
         // Required empty public constructor
     }
@@ -98,11 +101,13 @@ public class NewTasks extends Fragment {
         globalTaskList = new ArrayList<>();
         queue = vollySingleton.getInstance().getRequestQueue();
 
-        if(Paper.book().exist("userId"))
-        {
-            userId=Paper.book().read("userId");
+        if (Paper.book().exist("userId")) {
+            userId = Paper.book().read("userId");
 
         }
+
+
+
 
     }
 
@@ -117,7 +122,8 @@ public class NewTasks extends Fragment {
         rv_userTaskRecycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
         rv_userTaskRecycleView.setAdapter(adapter);
 
-        flipper=view.findViewById(R.id.flipper);
+        flipper = view.findViewById(R.id.flipper);
+
 
 //        getTaskListForUser(getActivity());
 
@@ -315,7 +321,7 @@ public class NewTasks extends Fragment {
             holder.tv_title.setText(itemList.getTitle());
             holder.tv_incentive.setText("₹" + itemList.getIncentive() + "/-");
             try {
-                holder.tv_startDate.setText("Start Date: " + getDate(itemList.getStartDate(),false));
+                holder.tv_startDate.setText("Start Date: " + getDate(itemList.getStartDate(), false));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -332,14 +338,14 @@ public class NewTasks extends Fragment {
         public void setSource(ArrayList<TaskItems_POJO> list) {
 
 
-            System.out.println("Inside this "+list.size());
-         //   if (list.size() >= 0) {
-                this.taskList = list;
+            System.out.println("Inside this " + list.size());
+            //   if (list.size() >= 0) {
+            this.taskList = list;
 
-                notifyItemRangeRemoved(0, taskList.size());
+            notifyItemRangeRemoved(0, taskList.size());
 
-                notifyDataSetChanged();
-           // }
+            notifyDataSetChanged();
+            // }
 
         }
 
@@ -372,7 +378,7 @@ public class NewTasks extends Fragment {
 
 
                             specificTaskPosition = getAdapterPosition();
-                            startActivity(intent,options.toBundle());
+                            startActivity(intent, options.toBundle());
 
                             //    startActivity(new Intent(context, DialogThemedActivity.class));
 
@@ -390,23 +396,21 @@ public class NewTasks extends Fragment {
         }
 
 
-
     }
 
-    public static String getDate(String date,boolean isTimeRequired) throws ParseException {
+    public static String getDate(String date, boolean isTimeRequired) throws ParseException {
         if (date != null) {
             String newdate[] = date.split("T");
 
-            Date  date1 = new SimpleDateFormat("yyyy-MM-dd").parse(newdate[0]);
+            Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(newdate[0]);
 
-            if(isTimeRequired)
-            {
-                 exactime=newdate[1].split("\\:");
+            if (isTimeRequired) {
+                exactime = newdate[1].split("\\:");
 
 
-              //  Date time = new SimpleDateFormat("HH:mm:ss").parse(exactime[0]);
+                //  Date time = new SimpleDateFormat("HH:mm:ss").parse(exactime[0]);
 
-                return exactime[0]+"hrs, "+DateFormat.getDateInstance().format(date1);
+                return exactime[0] + "hrs, " + DateFormat.getDateInstance().format(date1);
             }
 
             return DateFormat.getDateInstance().format(date1);
@@ -414,8 +418,6 @@ public class NewTasks extends Fragment {
             return null;
         }
     }
-
-
 
 
 }

@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -64,8 +65,8 @@ public class OnGoing extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private AlertDialog dialog, moveTaskDialog;
-    SweetAlertDialog mDialog;
 
+    ViewFlipper flipper;
     ArrayList<TaskItems_POJO> globalTaskList;
 
     // TODO: Rename and change types of parameters
@@ -111,10 +112,18 @@ public class OnGoing extends Fragment {
         rv_taskRecycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
         rv_taskRecycleView.setAdapter(adapter);
 
-        getTaskListForUser(getActivity());
+        flipper=view.findViewById(R.id.flipper);
 
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        getTaskListForUser(getActivity());
+
     }
 
     public void getTaskListForUser(final Context context) {
@@ -165,8 +174,8 @@ public class OnGoing extends Fragment {
                                             @Override
                                             public void run() {
                                                 progressDialog.dismiss();
-                                                Alert.showAlertDialog("No On Going task", context);
 
+                                                flipper.showNext();
                                             }
                                         });
 
