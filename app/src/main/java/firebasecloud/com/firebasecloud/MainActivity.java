@@ -1,15 +1,16 @@
 package firebasecloud.com.firebasecloud;
 
-import android.*;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,8 +24,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -34,14 +35,14 @@ import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
-import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
-import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -50,7 +51,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
-import firebasecloud.com.firebasecloud.ActiveTaskFragements.OnGoing;
 import firebasecloud.com.firebasecloud.BottomNavigationFragements.Active;
 import firebasecloud.com.firebasecloud.BottomNavigationFragements.Profile;
 import firebasecloud.com.firebasecloud.BottomNavigationFragements.Tasks;
@@ -67,7 +67,7 @@ import static firebasecloud.com.firebasecloud.TakePictureTask.getResizedBitmap;
 import static firebasecloud.com.firebasecloud.TakePictureTask.hasPermissions;
 import static firebasecloud.com.firebasecloud.TakePictureTask.imageToString;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements InternetConnectionCheck.ConnectivityReceiverListener {
     String[] locationPermissions = {android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION};
     int PERMISSION_ALL = 1;
     FloatingActionButton fl_camOpen;
@@ -81,6 +81,9 @@ public class MainActivity extends AppCompatActivity {
     RequestQueue queue;
     Uri file;
     String userType;
+    boolean isUserRestricted;
+    String userCity;
+    MenuItem item;
 
     ActivityMainBinding binding;
     boolean doubleBackToExitPressedOnce = false;
@@ -97,12 +100,8 @@ public class MainActivity extends AppCompatActivity {
         Toolbar tabs_scrolling = findViewById(R.id.toolbar);
         setSupportActionBar(tabs_scrolling);
 
-        if(Paper.book().exist("userType"))
-        {
 
-            userType=Paper.book().read("userType");
-        }
-        queue= vollySingleton.getInstance().getRequestQueue();
+        queue = vollySingleton.getInstance().getRequestQueue();
         progressDialog = new ProgressDialog(this);
 
         getUserInstantLocation = new InstantLocation(this, this);
@@ -139,86 +138,23 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
         fl_camOpen = findViewById(R.id.fl_openCam);
 
-        if (userType.equalsIgnoreCase("magazine")) {
-            fl_camOpen.setVisibility(View.GONE);
-        } else {
-            fl_camOpen.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    String[] PERMISSIONS = {android.Manifest.permission.CAMERA, android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
-
-                    if (!hasPermissions(MainActivity.this, PERMISSIONS)) {
-
-                        ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS, PERMISSION_ALL);
-
-
-                    } else {
-
-
-                        takePicture();
-
-
-                    }
-
-
-                    //     ShowUploadDialog(MainActivity.this);
-                }
-            });
-
-        }
-
+        getUserTypeAndAvailability(MainActivity.this);
 
     }
 
-        public void showDialog(Activity activity){
-             imageUploadDialog = new Dialog(activity);
-            imageUploadDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            imageUploadDialog.setCancelable(false);
-            imageUploadDialog.setContentView(R.layout.upload_picture_dialog);
 
-            imageUploadDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            TextView tv_submit = imageUploadDialog.findViewById(R.id.tv_submit);
-            TextView tv_cancel = imageUploadDialog.findViewById(R.id.tv_cancel);
+    public void showDialog(Activity activity) {
+        imageUploadDialog = new Dialog(activity);
+        imageUploadDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        imageUploadDialog.setCancelable(false);
+        imageUploadDialog.setContentView(R.layout.upload_picture_dialog);
 
-            imageToUpload = imageUploadDialog.findViewById(R.id.im_imageToUpload);
-            imageToUpload.setImageBitmap(uploadedBitmap);
+        imageUploadDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        TextView tv_submit = imageUploadDialog.findViewById(R.id.tv_submit);
+        TextView tv_cancel = imageUploadDialog.findViewById(R.id.tv_cancel);
 
-
-
-            tv_submit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    sendImageToServer(MainActivity.this);
-
-                }
-            });
-            tv_cancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    imageUploadDialog.dismiss();
-                }
-            });
-
-            imageUploadDialog.show();
-
-        }
-
-
-
-    public void ShowUploadDialog(Context context) {
-        final AlertDialog.Builder malert = new AlertDialog.Builder(context);
-        LayoutInflater inflater = LayoutInflater.from(context);
-        View dialogView = inflater.inflate(R.layout.upload_picture_dialog, null);
-
-        imageUploadDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.YELLOW));
-        TextView tv_submit = dialogView.findViewById(R.id.tv_submit);
-        TextView tv_cancel = dialogView.findViewById(R.id.tv_cancel);
-
-        imageToUpload = dialogView.findViewById(R.id.im_imageToUpload);
+        imageToUpload = imageUploadDialog.findViewById(R.id.im_imageToUpload);
         imageToUpload.setImageBitmap(uploadedBitmap);
-
 
 
         tv_submit.setOnClickListener(new View.OnClickListener() {
@@ -236,13 +172,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        malert.setView(dialogView);
-
-        imageUploadDialog = malert.create();
         imageUploadDialog.show();
 
     }
+
+
+
 
     private void sendImageToServer(final Context context) {
 
@@ -372,7 +307,7 @@ public class MainActivity extends AppCompatActivity {
 
                 uploadedBitmap = getResizedBitmap(MediaStore.Images.Media.getBitmap(this.getContentResolver(), file), 1000);
 
-               // ShowUploadDialog(MainActivity.this);
+                // ShowUploadDialog(MainActivity.this);
 
                 showDialog(MainActivity.this);
 
@@ -419,6 +354,134 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         getUserInstantLocation.getLocation();
         getUserInstantLocation.changeLocationSetting(PERMISSION_ALL, locationPermissions);
+
+        final IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+
+        InternetConnectionCheck connectivityReceiver = new InternetConnectionCheck();
+        registerReceiver(connectivityReceiver, intentFilter);
+
+        /*register connection status listener*/
+        MyApplication.getInstance().setConnectivityListener(this);
+
+    }
+
+
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+
+        if (!isConnected) {
+            LoginActivity.netConnectivityDialog(MainActivity.this);
+        }
+
+
+    }
+
+    public void getUserTypeAndAvailability(final Context context) {
+
+        final String userDetailUrl = "http://www.admin-panel.adecity.com/api/profile";
+
+
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+
+                HashMap<String, Object> params = new HashMap<>();
+
+                params.put("user_id", NewTasks.userId);
+
+
+                JsonObjectRequest request_json = new JsonObjectRequest(Request.Method.POST, userDetailUrl, new JSONObject(params),
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+
+
+                                try {
+                                    boolean success = response.getBoolean("success");
+
+
+                                    if (success) {
+
+                                        if (response.length() != 0) {
+                                            JSONArray userDetailArray = response.getJSONArray("result");
+                                            JSONObject userObject = userDetailArray.getJSONObject(0);
+
+                                            userType = userObject.getString("user_type");
+                                            isUserRestricted = userObject.getBoolean("hideButton");
+                                            userCity = userObject.getString("user_city");
+                                           item.setTitle(userCity);
+
+                                            if (userType != null) {
+                                                if (userType.equalsIgnoreCase("magazine")) {
+
+                                                    if (!isUserRestricted) {
+                                                        fl_camOpen.setVisibility(View.VISIBLE);
+                                                        fl_camOpen.setOnClickListener(new View.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(View v) {
+
+                                                                String[] PERMISSIONS = {android.Manifest.permission.CAMERA, android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
+                                                                if (!hasPermissions(MainActivity.this, PERMISSIONS)) {
+
+                                                                    ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS, PERMISSION_ALL);
+
+
+                                                                } else {
+
+
+                                                                    takePicture();
+
+
+                                                                }
+
+
+                                                            }
+                                                        });
+                                                    }
+                                                }
+
+
+                                            }
+
+
+                                        }
+
+                                    }
+
+                                } catch (JSONException e) {
+                                    Toast.makeText(context, "" + e, Toast.LENGTH_SHORT).show();
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        String message = VollyErrors.getInstance().showVollyError(error);
+
+                        Toast.makeText(context, ""+message, Toast.LENGTH_SHORT).show();
+                        error.printStackTrace();
+
+                    }
+                });
+
+                queue.add(request_json);
+
+
+            }
+        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.city_menu, menu);//Menu Resource, Menu
+        item = menu.getItem(0);
+        //  item.setTitle(userCity);
+        return true;
+
     }
 
 

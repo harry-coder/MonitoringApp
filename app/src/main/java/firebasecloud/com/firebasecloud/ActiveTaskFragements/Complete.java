@@ -33,7 +33,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import firebasecloud.com.firebasecloud.Alert;
 import firebasecloud.com.firebasecloud.CustomElements.CompleteTaskPojo;
+import firebasecloud.com.firebasecloud.CustomElements.VollyErrors;
+import firebasecloud.com.firebasecloud.LoginActivity;
 import firebasecloud.com.firebasecloud.R;
 import firebasecloud.com.firebasecloud.TaskFragments.NewTasks;
 import firebasecloud.com.firebasecloud.Volly.vollySingleton;
@@ -176,10 +179,12 @@ public class Complete extends Fragment {
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        String message = VollyErrors.getInstance().showVollyError(error);
+
                         progressDialog.dismiss();
 
-                        Toast.makeText(context, "" + error.toString(), Toast.LENGTH_SHORT).show();
-                    }
+                        Alert.showAlertDialog(message, context);
+                        error.printStackTrace();                    }
                 }) {
 
 

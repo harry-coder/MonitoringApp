@@ -251,31 +251,35 @@ public class Profile extends Fragment {
             }
         });
 
+
+        return view;
+    }
+
+    public void checkWhetherUrlExist() {
         if (Paper.book().exist("aadharUrl")) {
 
-            final String url=Paper.book().read("aadharUrl");
+            final String url = Paper.book().read("aadharUrl");
             tv_aadharUpload.setText("Aadhar uploaded");
             tv_aadharUpload.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
             tv_showAadhar.setVisibility(View.VISIBLE);
             tv_showAadhar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    showDialog(getActivity(),url);
+                    showDialog(getActivity(), url);
 
                 }
             });
 
         }
-
-        return view;
     }
-
 
     @Override
     public void onResume() {
         super.onResume();
 
-        Toast.makeText(, "", Toast.LENGTH_SHORT).show();
+        checkWhetherUrlExist();
+
+
     }
 
     public void showDialog(Activity activity, String url) {
@@ -351,7 +355,7 @@ public class Profile extends Fragment {
                     public void onErrorResponse(VolleyError error) {
                         String message = VollyErrors.getInstance().showVollyError(error);
                         dialog.dismiss();
-                        Alert.showAlertDialog(message, context);
+                        Toast.makeText(context, ""+message, Toast.LENGTH_SHORT).show();
                         error.printStackTrace();
                     }
                 });
@@ -510,6 +514,7 @@ public class Profile extends Fragment {
 
                             Paper.book().write("aadharUrl", url);
                             isAadharUploadingAction = false;
+                            checkWhetherUrlExist();
                         } else {
                             Paper.book().write("imageUrl", url);
                             setImageUsingPicasso(context, url, im_userImage);
@@ -521,6 +526,7 @@ public class Profile extends Fragment {
                         dialog.dismiss();
 
                         Alert.showAlertDialog(message, context);
+
                     }
                 } catch (JSONException e) {
                     Alert.showAlertDialog(e.getMessage(), context);
@@ -537,7 +543,7 @@ public class Profile extends Fragment {
 
 
                 dialog.dismiss();
-                Alert.showAlertDialog(message, context);
+                Toast.makeText(context, ""+message, Toast.LENGTH_SHORT).show();
                 error.printStackTrace();
             }
         }) {
@@ -636,39 +642,11 @@ public class Profile extends Fragment {
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        NetworkResponse networkResponse = error.networkResponse;
-                        String errorMessage = "Unknown error";
-                        if (networkResponse == null) {
-                            if (error.getClass().equals(TimeoutError.class)) {
-                                errorMessage = "Request timeout";
-                            } else if (error.getClass().equals(NoConnectionError.class)) {
-                                errorMessage = "Failed to connect server";
-                            }
-                        } else {
-                            String result = new String(networkResponse.data);
-                            try {
-                                JSONObject response = new JSONObject(result);
-                                String status = response.getString("status");
-                                String message = response.getString("message");
+                   String message=VollyErrors.getInstance().showVollyError(error);
 
-                                Log.e("Error Status", status);
-                                Log.e("Error Message", message);
-
-                                if (networkResponse.statusCode == 404) {
-                                    errorMessage = "Resource not found";
-                                } else if (networkResponse.statusCode == 401) {
-                                    errorMessage = message + " Please login again";
-                                } else if (networkResponse.statusCode == 400) {
-                                    errorMessage = message + " Check your inputs";
-                                } else if (networkResponse.statusCode == 500) {
-                                    errorMessage = message + " Something is getting wrong";
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
+                        Toast.makeText(context, ""+message, Toast.LENGTH_SHORT).show();
                         error.printStackTrace();
-                        Alert.showAlertDialog(errorMessage, context);
+
                     }
                 });
 
@@ -723,39 +701,12 @@ public class Profile extends Fragment {
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        NetworkResponse networkResponse = error.networkResponse;
-                        String errorMessage = "Unknown error";
-                        if (networkResponse == null) {
-                            if (error.getClass().equals(TimeoutError.class)) {
-                                errorMessage = "Request timeout";
-                            } else if (error.getClass().equals(NoConnectionError.class)) {
-                                errorMessage = "Failed to connect server";
-                            }
-                        } else {
-                            String result = new String(networkResponse.data);
-                            try {
-                                JSONObject response = new JSONObject(result);
-                                String status = response.getString("status");
-                                String message = response.getString("message");
+                        String message = VollyErrors.getInstance().showVollyError(error);
 
-                                Log.e("Error Status", status);
-                                Log.e("Error Message", message);
 
-                                if (networkResponse.statusCode == 404) {
-                                    errorMessage = "Resource not found";
-                                } else if (networkResponse.statusCode == 401) {
-                                    errorMessage = message + " Please login again";
-                                } else if (networkResponse.statusCode == 400) {
-                                    errorMessage = message + " Check your inputs";
-                                } else if (networkResponse.statusCode == 500) {
-                                    errorMessage = message + " Something is getting wrong";
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
+
+                        Toast.makeText(context, ""+message, Toast.LENGTH_SHORT).show();
                         error.printStackTrace();
-                        Alert.showAlertDialog(errorMessage, context);
 
                     }
                 });

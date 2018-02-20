@@ -36,6 +36,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import firebasecloud.com.firebasecloud.CustomElements.VollyErrors;
 import firebasecloud.com.firebasecloud.Volly.vollySingleton;
 
 
@@ -246,40 +247,11 @@ public class ForgotPassword_Activity extends AppCompatActivity {
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                NetworkResponse networkResponse = error.networkResponse;
-                                String errorMessage = "Unknown error";
-                                if (networkResponse == null) {
-                                    if (error.getClass().equals(TimeoutError.class)) {
-                                        errorMessage = "Request timeout";
-                                    } else if (error.getClass().equals(NoConnectionError.class)) {
-                                        errorMessage = "Failed to connect server";
-                                    }
-                                    progressDialog.dismiss();
-                                } else {
-                                    String result = new String(networkResponse.data);
-                                    try {
-                                        JSONObject response = new JSONObject(result);
-                                        String status = response.getString("status");
-                                        String message = response.getString("message");
+                                String message = VollyErrors.getInstance().showVollyError(error);
 
-                                        Log.e("Error Status", status);
-                                        Log.e("Error Message", message);
+                                progressDialog.dismiss();
 
-                                        if (networkResponse.statusCode == 404) {
-                                            errorMessage = "Resource not found";
-                                        } else if (networkResponse.statusCode == 401) {
-                                            errorMessage = message + " Please login again";
-                                        } else if (networkResponse.statusCode == 400) {
-                                            errorMessage = message + " Check your inputs";
-                                        } else if (networkResponse.statusCode == 500) {
-                                            errorMessage = message + " Something is getting wrong";
-                                        }
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-                                    progressDialog.dismiss();
-                                }
-                                Alert.showAlertDialog(errorMessage, context);
+                                Alert.showAlertDialog(message, context);
                                 error.printStackTrace();
                             }
                         });
@@ -373,40 +345,11 @@ public class ForgotPassword_Activity extends AppCompatActivity {
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        NetworkResponse networkResponse = error.networkResponse;
-                        String errorMessage = "Unknown error";
-                        if (networkResponse == null) {
-                            if (error.getClass().equals(TimeoutError.class)) {
-                                errorMessage = "Request timeout";
-                            } else if (error.getClass().equals(NoConnectionError.class)) {
-                                errorMessage = "Failed to connect server";
-                            }
-                            progressDialog.dismiss();
-                        } else {
-                            String result = new String(networkResponse.data);
-                            try {
-                                JSONObject response = new JSONObject(result);
-                                String status = response.getString("status");
-                                String message = response.getString("message");
+                        String message = VollyErrors.getInstance().showVollyError(error);
 
-                                Log.e("Error Status", status);
-                                Log.e("Error Message", message);
+                        progressDialog.dismiss();
 
-                                if (networkResponse.statusCode == 404) {
-                                    errorMessage = "Resource not found";
-                                } else if (networkResponse.statusCode == 401) {
-                                    errorMessage = message + " Please login again";
-                                } else if (networkResponse.statusCode == 400) {
-                                    errorMessage = message + " Check your inputs";
-                                } else if (networkResponse.statusCode == 500) {
-                                    errorMessage = message + " Something is getting wrong";
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                            progressDialog.dismiss();
-                        }
-                        Alert.showAlertDialog(errorMessage, context);
+                        Alert.showAlertDialog(message, context);
                         error.printStackTrace();
                     }
                 });

@@ -46,6 +46,7 @@
              android:layout_above="@+id/bottom_nav"
              android:layout_alignParentEnd="true"
              android:layout_marginBottom="20dp"
+             android:visibility="gone"
              android:layout_marginEnd="20dp"
              app:srcCompat="@drawable/camera_icon_white" />
 

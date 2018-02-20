@@ -72,8 +72,6 @@ public class Signup_Activity extends AppCompatActivity {
     public static String selectedCity;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -200,6 +198,7 @@ public class Signup_Activity extends AppCompatActivity {
         final String signupUrl = "http://www.admin-panel.adecity.com/api/register";
 
 
+/*
         JSONArray clusterLocalityArray=new JSONArray();
 
         //this could crash because lenght could be different...
@@ -233,6 +232,7 @@ public class Signup_Activity extends AppCompatActivity {
               array.put(list.get(i).getLocalityName());
           }
       }
+*/
 
 
         new Handler().post(new Runnable() {
@@ -251,8 +251,7 @@ public class Signup_Activity extends AppCompatActivity {
 
                 params.put("user_city", city);
                 //this need to be changed..
-                params.put("user_locality", array);
-
+                // params.put("user_locality", array);
 
 
                 JsonObjectRequest request_json = new JsonObjectRequest(Request.Method.POST, signupUrl, new JSONObject(params),
@@ -414,13 +413,13 @@ public class Signup_Activity extends AppCompatActivity {
                 Paper.book().delete(selectedCity);
                 Paper.book().delete("selectedLocality");
 
-                selectedCity=cityList.get(position);
+                selectedCity = cityList.get(position);
 
                 if (!cityList.get(position).equalsIgnoreCase("select city")) {
                     localityKey.addAll(citiesMap.keySet());
                     cityId = localityKey.get(position - 1);
 
-             //       startActivity(new Intent(Signup_Activity.this, SearchLocality.class));
+                    //       startActivity(new Intent(Signup_Activity.this, SearchLocality.class));
                 }
             }
 
@@ -657,8 +656,9 @@ public class Signup_Activity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         progressDialog.dismiss();
-                        //      Toast.makeText(Signup_Activity.this, "Volly error" + error, Toast.LENGTH_SHORT).show();
-                        //    System.out.println(error);
+                        String message = VollyErrors.getInstance().showVollyError(error);
+
+                        Alert.showAlertDialog(message, Signup_Activity.this);
                     }
                 });
 

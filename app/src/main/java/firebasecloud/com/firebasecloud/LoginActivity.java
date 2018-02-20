@@ -30,6 +30,7 @@ import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.NoConnectionError;
@@ -49,6 +50,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
+import firebasecloud.com.firebasecloud.CustomElements.VollyErrors;
 import firebasecloud.com.firebasecloud.Volly.vollySingleton;
 import firebasecloud.com.firebasecloud.databinding.ActivityLoginBinding;
 import io.paperdb.Paper;
@@ -62,13 +64,12 @@ public class LoginActivity extends AppCompatActivity {
     private String mobileNumber, userpassword;
     private Handler handler;
     public static String userId = "";
-    public static String userType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
 
@@ -79,17 +80,13 @@ public class LoginActivity extends AppCompatActivity {
         handler = new Handler();
 
 
-
-
         dataBinding.flLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (checkInternetConnection()) {
+                if (checkInternetConnection(LoginActivity.this)) {
 
-                 /*   progressDialog.setMessage("Logging in..");
-                    progressDialog.show();
-*/
+
                     mobileNumber = dataBinding.mobile.getText().toString();
                     userpassword = dataBinding.password.getText().toString();
 
@@ -105,8 +102,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     loginWithCredentials(mobileNumber, userpassword);
 
-                }
-                else {
+                } else {
                     netConnectivityDialog(LoginActivity.this);
                 }
 
@@ -116,17 +112,15 @@ public class LoginActivity extends AppCompatActivity {
         dataBinding.tvSignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this,Signup_Activity.class));
+                startActivity(new Intent(LoginActivity.this, Signup_Activity.class));
                 overridePendingTransition(R.anim.activity_in, R.anim.avtivity_out);
 
             }
         });
     }
 
-    public void fetchMobNumber()
-    {
-        if(Paper.book().exist("contact"))
-        {
+    public void fetchMobNumber() {
+        if (Paper.book().exist("contact")) {
             new Handler().post(new Runnable() {
                 @Override
                 public void run() {
@@ -140,124 +134,90 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }
+
     public void loginWithCredentials(final String mobile, final String password) {
 
         final String loginUrl = "http://www.admin-panel.adecity.com/api/login";
-            animateButtonWidth();
-            fadeOutTextAndShowProgressDialog();
+        animateButtonWidth();
+        fadeOutTextAndShowProgressDialog();
 
 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final HashMap<String, String> params = new HashMap<String, String>();
 
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    final HashMap<String, String> params = new HashMap<String, String>();
-
-                    params.put("password", password);
-                    params.put("mobile", mobile);
-
-
-                    JsonObjectRequest request_json = new JsonObjectRequest(Request.Method.POST, loginUrl, new JSONObject(params),
-                            new Response.Listener<JSONObject>() {
-                                @Override
-                                public void onResponse(JSONObject response) {
+                params.put("password", password);
+                params.put("mobile", mobile);
 
 
-                                    try {
-                                        boolean success = response.getBoolean("success");
+                JsonObjectRequest request_json = new JsonObjectRequest(Request.Method.POST, loginUrl, new JSONObject(params),
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
 
 
-                                        if (success) {
+                                try {
+                                    boolean success = response.getBoolean("success");
 
 
-                                            //deleting the user logout out status because he is loging in now
-                                            Paper.book().delete("isUserLoggedOut");
-                                            userId = response.getString("userid");
-                                            userType=response.getString("user_type");
-                                            System.out.println("This is user type "+userType);
+                                    if (success) {
 
 
+                                        //deleting the user logout out status because he is loging in now
+                                        Paper.book().delete("isUserLoggedOut");
+                                        userId = response.getString("userid");
 
-                                            if(userId!=null)
-                                            {
-                                                Paper.book().write("userId",userId);
-                                                Paper.book().write("userType",userType);
-                                            }
+                                        if (userId != null) {
+                                            Paper.book().write("userId", userId);
 
-                                            nextAction();
 
-                                            //            Paper.book().write("userId", userId);
-
-                                        } else {
-
-                                            Alert.showAlertDialog(response.getString("msg"),LoginActivity.this);
-                                            deAnimateButtonWidth();
-                                            fadeOutProgressbarAndShowText();
-                                  //          progressDialog.dismiss();
                                         }
 
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                        System.out.println(e);
-                                    //    progressDialog.dismiss();
+                                        nextAction();
+
+                                        //            Paper.book().write("userId", userId);
+
+                                    } else {
+
+                                        Alert.showAlertDialog(response.getString("msg"), LoginActivity.this);
+                                        deAnimateButtonWidth();
+                                        fadeOutProgressbarAndShowText();
+                                        //          progressDialog.dismiss();
                                     }
 
-                                }
-                            }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            deAnimateButtonWidth();
-                            fadeOutProgressbarAndShowText();
-                            NetworkResponse networkResponse = error.networkResponse;
-                            String errorMessage = "Unknown error";
-                            if (networkResponse == null) {
-                                if (error.getClass().equals(TimeoutError.class)) {
-                                    errorMessage = "Request timeout";
-                                } else if (error.getClass().equals(NoConnectionError.class)) {
-                                    errorMessage = "Failed to connect server";
-                                }
-                                progressDialog.dismiss();
-                            } else {
-                                String result = new String(networkResponse.data);
-                                try {
-                                    JSONObject response = new JSONObject(result);
-                                    String status = response.getString("status");
-                                    String message = response.getString("message");
-
-                                    Log.e("Error Status", status);
-                                    Log.e("Error Message", message);
-
-                                    if (networkResponse.statusCode == 404) {
-                                        errorMessage = "Resource not found";
-                                    } else if (networkResponse.statusCode == 401) {
-                                        errorMessage = message + " Please login again";
-                                    } else if (networkResponse.statusCode == 400) {
-                                        errorMessage = message + " Check your inputs";
-                                    } else if (networkResponse.statusCode == 500) {
-                                        errorMessage = message + " Something is getting wrong";
-                                    }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
+                                    System.out.println(e);
+                                    //    progressDialog.dismiss();
                                 }
-                                progressDialog.dismiss();
+
                             }
-                            Alert.showAlertDialog(errorMessage, LoginActivity.this);
-                            error.printStackTrace();
-                        }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        deAnimateButtonWidth();
+                        fadeOutProgressbarAndShowText();
+                        String message = VollyErrors.getInstance().showVollyError(error);
 
-                    });
+                        progressDialog.dismiss();
+
+                        Toast.makeText(LoginActivity.this, ""+message, Toast.LENGTH_SHORT).show();
+                        error.printStackTrace();
+                    }
+
+                });
 
 
-                    queue.add(request_json);
-                }
-            }).start();
-
+                queue.add(request_json);
+            }
+        }).start();
 
 
     }
-    public static void netConnectivityDialog(Context context) {
 
-        //TodayRate.showAlertDialog("No internet available ",);
+    public static DialogPlus netConnectivityDialog(final Context context) {
+
 
         DialogPlus dialog = DialogPlus.newDialog(context)
                 .setContentHolder(new ViewHolder(R.layout.no_internet_dialog)).setGravity(Gravity.TOP)
@@ -265,6 +225,14 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogPlus dialog, View view) {
 
+                        if (view.getId() == R.id.tv_tryAgain) {
+
+                            boolean isConnected = checkInternetConnection(context);
+
+                            if (isConnected) {
+                                dialog.dismiss();
+                            }
+                        }
 
                     }
 
@@ -278,19 +246,19 @@ public class LoginActivity extends AppCompatActivity {
 
 
                     }
-                }).setCancelable(true).setGravity(Gravity.CENTER).setContentBackgroundResource(Color.TRANSPARENT)
+                }).setGravity(Gravity.CENTER).setContentBackgroundResource(Color.TRANSPARENT)
                 // This will enable the expand feature, (similar to android L share dialog)
                 .create();
         dialog.show();
 
 
+        return dialog;
     }
 
 
-
     //check internet connection
-    public boolean checkInternetConnection() {
-        ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+    public static boolean checkInternetConnection(Context context) {
+        ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = manager.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnectedOrConnecting() && networkInfo.getDetailedState() == NetworkInfo.DetailedState.CONNECTED) {
 
@@ -300,8 +268,6 @@ public class LoginActivity extends AppCompatActivity {
             return false;
         } else return false;
     }
-
-
 
 
     public void showProgressDialog() {
@@ -376,7 +342,7 @@ public class LoginActivity extends AppCompatActivity {
         anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
-               // System.out.println("Inside listener");
+                // System.out.println("Inside listener");
 
                 int val = (int) valueAnimator.getAnimatedValue();
                 ViewGroup.LayoutParams layoutParams = dataBinding.flLogin.getLayoutParams();
@@ -481,7 +447,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     public void forgotPassword(View view) {
-        startActivity(new Intent(LoginActivity.this,ForgotPassword_Activity.class));
+        startActivity(new Intent(LoginActivity.this, ForgotPassword_Activity.class));
         overridePendingTransition(R.anim.activity_in, R.anim.avtivity_out);
 
 

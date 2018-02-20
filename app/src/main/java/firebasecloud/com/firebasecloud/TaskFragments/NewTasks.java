@@ -20,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.android.volley.AuthFailureError;
@@ -47,6 +48,7 @@ import java.util.Map;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import firebasecloud.com.firebasecloud.Alert;
 import firebasecloud.com.firebasecloud.CustomElements.TaskItems_POJO;
+import firebasecloud.com.firebasecloud.CustomElements.VollyErrors;
 import firebasecloud.com.firebasecloud.DialogThemedActivity;
 import firebasecloud.com.firebasecloud.LoginActivity;
 import firebasecloud.com.firebasecloud.R;
@@ -207,40 +209,12 @@ public class NewTasks extends Fragment {
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        NetworkResponse networkResponse = error.networkResponse;
-                        String errorMessage = "Unknown error";
-                        if (networkResponse == null) {
-                            if (error.getClass().equals(TimeoutError.class)) {
-                                errorMessage = "Request timeout";
-                            } else if (error.getClass().equals(NoConnectionError.class)) {
-                                errorMessage = "Failed to connect server";
-                            }
-                            progressDialog.dismiss();
-                        } else {
-                            String result = new String(networkResponse.data);
-                            try {
-                                JSONObject response = new JSONObject(result);
-                                String status = response.getString("status");
-                                String message = response.getString("message");
+                        String message = VollyErrors.getInstance().showVollyError(error);
 
-                                Log.e("Error Status", status);
-                                Log.e("Error Message", message);
+                        progressDialog.dismiss();
 
-                                if (networkResponse.statusCode == 404) {
-                                    errorMessage = "Resource not found";
-                                } else if (networkResponse.statusCode == 401) {
-                                    errorMessage = message + " Please login again";
-                                } else if (networkResponse.statusCode == 400) {
-                                    errorMessage = message + " Check your inputs";
-                                } else if (networkResponse.statusCode == 500) {
-                                    errorMessage = message + " Something is getting wrong";
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                            progressDialog.dismiss();
-                        }
-                        Alert.showAlertDialog(errorMessage, getActivity());
+
+                        Toast.makeText(context, ""+message, Toast.LENGTH_SHORT).show();
                         error.printStackTrace();
                     }
                 }) {

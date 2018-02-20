@@ -34,11 +34,17 @@ public class MyApplication extends Application {
 
 
 
+
     public static MyApplication getInstance() {
         return application;
     }
 
     public static Context getContext() {
         return application.getApplicationContext();
+    }
+
+
+    public void setConnectivityListener(InternetConnectionCheck.ConnectivityReceiverListener listener) {
+        InternetConnectionCheck.connectivityReceiverListener = listener;
     }
 }

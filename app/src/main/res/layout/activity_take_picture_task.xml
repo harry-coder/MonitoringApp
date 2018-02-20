@@ -57,7 +57,7 @@
 
                         android:background="?selectableItemBackgroundBorderless"
 
-                        android:padding="10dp"
+                        android:padding="30dp"
                         app:srcCompat="@drawable/camera_icon_white" />
 
 

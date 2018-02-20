@@ -34,7 +34,7 @@ import org.json.JSONObject;
             if (error.getClass().equals(TimeoutError.class)) {
                 errorMessage = "Request timeout";
             } else if (error.getClass().equals(NoConnectionError.class)) {
-                errorMessage = "Failed to connect server";
+                errorMessage = "No Internet Connection";
             }
 
             return errorMessage;
