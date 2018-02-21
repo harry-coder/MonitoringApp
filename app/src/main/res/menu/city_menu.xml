@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/city"
-        android:title="Delhi"
+        android:title=""
 
 
 

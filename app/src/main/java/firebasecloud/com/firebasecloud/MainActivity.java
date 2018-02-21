@@ -410,7 +410,10 @@ public class MainActivity extends AppCompatActivity implements InternetConnectio
                                             userType = userObject.getString("user_type");
                                             isUserRestricted = userObject.getBoolean("hideButton");
                                             userCity = userObject.getString("user_city");
-                                           item.setTitle(userCity);
+
+                                            Paper.book().write("userCity",userCity);
+
+
 
                                             if (userType != null) {
                                                 if (userType.equalsIgnoreCase("magazine")) {
@@ -479,6 +482,11 @@ public class MainActivity extends AppCompatActivity implements InternetConnectio
 
         getMenuInflater().inflate(R.menu.city_menu, menu);//Menu Resource, Menu
         item = menu.getItem(0);
+        if(Paper.book().exist("userCity"))
+        {
+            item.setTitle((String)Paper.book().read("userCity"));
+        }
+
         //  item.setTitle(userCity);
         return true;
 

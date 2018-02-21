@@ -7,13 +7,12 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,15 +22,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.NetworkResponse;
-import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.RetryPolicy;
-import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
@@ -40,19 +33,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
-import firebasecloud.com.firebasecloud.ActiveTaskFragements.OnGoing;
-import firebasecloud.com.firebasecloud.CustomElements.Localities;
 import firebasecloud.com.firebasecloud.CustomElements.VollyErrors;
 import firebasecloud.com.firebasecloud.Volly.vollySingleton;
 import firebasecloud.com.firebasecloud.databinding.ActivitySignupBinding;
 import io.paperdb.Paper;
+
 
 public class Signup_Activity extends AppCompatActivity {
 
@@ -66,10 +55,10 @@ public class Signup_Activity extends AppCompatActivity {
     int count = 60;
     boolean isIntruppted = false;
     VollyErrors vollyErrors;
-    HashMap<String, String> citiesMap;
+    HashMap<String, String> citiesMap,userTypeMap;
     public static String cityId;
     ArrayList<String> localityKey;
-    public static String selectedCity;
+    public static String selectedCity,selectedUserType;
 
 
     @Override
@@ -84,6 +73,7 @@ public class Signup_Activity extends AppCompatActivity {
 
         vollyErrors = VollyErrors.getInstance();
         citiesMap = new HashMap<>();
+        userTypeMap=new HashMap<>();
         localityKey = new ArrayList<>();
 
 
@@ -117,8 +107,10 @@ public class Signup_Activity extends AppCompatActivity {
 
         getUserCities();
 
+        getUserType();
 
-        setItemsForUserTypeSpinner(R.array.user_type);
+
+        //setItemsForUserTypeSpinner(R.array.user_type);
 
        /* binding.tvSelectLocality.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -245,7 +237,7 @@ public class Signup_Activity extends AppCompatActivity {
                 params.put("mobile", mobile);
                 params.put("password", password);
 
-                params.put("user_type", userType.toLowerCase());
+                params.put("user_type", selectedUserType);
                 params.put("name", name);
                 params.put("registrationId", token);
 
@@ -309,40 +301,11 @@ public class Signup_Activity extends AppCompatActivity {
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        NetworkResponse networkResponse = error.networkResponse;
-                        String errorMessage = "Unknown error";
-                        if (networkResponse == null) {
-                            if (error.getClass().equals(TimeoutError.class)) {
-                                errorMessage = "Request timeout";
-                            } else if (error.getClass().equals(NoConnectionError.class)) {
-                                errorMessage = "Failed to connect server";
-                            }
-                            progressDialog.dismiss();
-                        } else {
-                            String result = new String(networkResponse.data);
-                            try {
-                                JSONObject response = new JSONObject(result);
-                                String status = response.getString("status");
-                                String message = response.getString("message");
+                        String message = VollyErrors.getInstance().showVollyError(error);
 
-                                Log.e("Error Status", status);
-                                Log.e("Error Message", message);
+                        progressDialog.dismiss();
 
-                                if (networkResponse.statusCode == 404) {
-                                    errorMessage = "Resource not found";
-                                } else if (networkResponse.statusCode == 401) {
-                                    errorMessage = message + " Please login again";
-                                } else if (networkResponse.statusCode == 400) {
-                                    errorMessage = message + " Check your inputs";
-                                } else if (networkResponse.statusCode == 500) {
-                                    errorMessage = message + " Something is getting wrong";
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                            progressDialog.dismiss();
-                        }
-                        Alert.showAlertDialog(errorMessage, Signup_Activity.this);
+                        Toast.makeText(Signup_Activity.this, ""+message, Toast.LENGTH_SHORT).show();
                         error.printStackTrace();
                     }
                 });
@@ -410,9 +373,9 @@ public class Signup_Activity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 //deleting when the user select any other city other than he has selected before
-                Paper.book().delete(selectedCity);
+               /* Paper.book().delete(selectedCity);
                 Paper.book().delete("selectedLocality");
-
+*/
                 selectedCity = cityList.get(position);
 
                 if (!cityList.get(position).equalsIgnoreCase("select city")) {
@@ -432,15 +395,13 @@ public class Signup_Activity extends AppCompatActivity {
     }
 
 
-    public void setItemsForUserTypeSpinner(int arrayId) {
-
-        String[] plants = getResources().getStringArray(arrayId);
-
-        final List<String> plantsList = new ArrayList<>(Arrays.asList(plants));
+    public void setItemsForUserTypeSpinner() {
+        final List<String> userTypeList = new ArrayList<>(userTypeMap.values());
+        userTypeList.add(0, "Select User Type");
 
         // Initializing an ArrayAdapter
         spinnerArrayAdapter = new ArrayAdapter<String>(
-                this, R.layout.spinner_item, plantsList) {
+                this, R.layout.spinner_item, userTypeList) {
             @Override
             public boolean isEnabled(int position) {
                 if (position == 0) {
@@ -467,6 +428,26 @@ public class Signup_Activity extends AppCompatActivity {
             }
         };
         binding.spUserType.setAdapter(spinnerArrayAdapter);
+        binding.spUserType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if (!userTypeList.get(position).equalsIgnoreCase("select user type")) {
+
+                    selectedUserType=userTypeList.get(position);
+
+
+
+                    //       startActivity(new Intent(Signup_Activity.this, SearchLocality.class));
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
 
     }
@@ -809,4 +790,68 @@ public class Signup_Activity extends AppCompatActivity {
 
 
     }
+
+    public void getUserType() {
+
+
+        final String getCityUrl = "http://www.admin-panel.adecity.com/task/get-user-types";
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+
+                final JsonObjectRequest request_json = new JsonObjectRequest(Request.Method.POST, getCityUrl, null,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+
+
+                                try {
+                                    boolean success = response.getBoolean("success");
+
+
+                                    if (success) {
+
+                                        JSONArray userTypeArray = response.getJSONArray("data");
+                                        for (int i = 0; i < userTypeArray.length(); i++) {
+                                            JSONObject userTypeObject = userTypeArray.getJSONObject(i);
+                                            userTypeMap.put(userTypeObject.getString("_id"), userTypeObject.getString("name"));
+                                        }
+                                     //   setItemsForCitySpinner();
+
+                                        setItemsForUserTypeSpinner();
+
+                                    } else {
+
+
+                                        Alert.showAlertDialog(response.getString("msg"), Signup_Activity.this);
+                                        //  btnSignIn.setProgress(100);
+                                    }
+
+                                } catch (JSONException e) {
+
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        String errorMessage = vollyErrors.showVollyError(error);
+                        Alert.showAlertDialog(errorMessage, Signup_Activity.this);
+                        error.printStackTrace();
+                    }
+                });
+
+                queue.add(request_json);
+
+
+            }
+        }).start();
+
+
+    }
+
 }
